@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        $.ajax({
+            url: "http://api.ipgeolocation.io/ipgeo?apiKey=bdc584375cf94dda934bf6cea7879c30",
+            type: "GET",
+            crossDomain: true,
+            success: function (response) {
+                console.log(response)
+
+            },
+            error: function (err) {
+                console.log(err)
+            }
+        });
+        console.log($.browser)
+    </script>
+</head>
+<body>
+   <h1>Test client</h1>
+</body>
+</html>
