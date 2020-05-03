@@ -3,12 +3,12 @@ package com.andlvovsky.wvs.service.impl;
 import com.andlvovsky.wvs.meta.Device;
 import com.andlvovsky.wvs.service.DeviceAnalyzer;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@Service
+@Component
 public class DefaultDeviceAnalyzer implements DeviceAnalyzer {
 
   private static final Pattern MOBILE_PATTERN = Pattern.compile("Mobi|Android");

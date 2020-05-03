@@ -2,11 +2,11 @@ package com.andlvovsky.wvs.service.impl;
 
 import com.andlvovsky.wvs.service.ApiKeyGenerator;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
-@Service
+@Component
 public class DefaultApiKeyGenerator implements ApiKeyGenerator {
   @Override
   public String generateApiKey() {

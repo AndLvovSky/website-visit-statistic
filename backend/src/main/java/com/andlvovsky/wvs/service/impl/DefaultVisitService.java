@@ -6,6 +6,7 @@ import com.andlvovsky.wvs.entity.VisitEntity;
 import com.andlvovsky.wvs.meta.Device;
 import com.andlvovsky.wvs.repository.VisitRepository;
 import com.andlvovsky.wvs.service.DeviceAnalyzer;
+import com.andlvovsky.wvs.service.IpGeolocator;
 import com.andlvovsky.wvs.service.SiteServiceLocal;
 import com.andlvovsky.wvs.service.VisitService;
 
@@ -22,16 +23,19 @@ public class DefaultVisitService implements VisitService {
   private final VisitRepository visitRepository;
   private final SiteServiceLocal siteServiceLocal;
   private final DeviceAnalyzer deviceAnalyzer;
+  private final IpGeolocator ipGeolocator;
 
   @Override
   @Transactional
-  public void visit(VisitDto visit, String apiKey) {
+  public void visit(VisitDto visit, String apiKey, String ip) {
     VisitEntity visitEntity = new VisitEntity();
     SiteEntity site = siteServiceLocal.findByApiKey(apiKey);
     visitEntity.setSite(site);
     visitEntity.setTime(visit.getTime());
     Device device = deviceAnalyzer.getDevice(visit.getUserAgent());
     visitEntity.setDevice(device);
+    String country = ipGeolocator.getCountryByIp(ip).orElse(null);
+    visitEntity.setCountry(country);
     visitRepository.save(visitEntity);
   }
 }

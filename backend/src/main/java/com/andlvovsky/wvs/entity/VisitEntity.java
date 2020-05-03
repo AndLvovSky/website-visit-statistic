@@ -43,10 +43,10 @@ public class VisitEntity {
   @Column(name = "time", nullable = false)
   private LocalDateTime time;
 
-  @Column(name = "device", nullable = false)
+  @Column(name = "device")
   @Enumerated(EnumType.STRING)
   private Device device;
 
   @Column(name = "country", nullable = false)
-  private String country = "Ukraine";
+  private String country;
 }

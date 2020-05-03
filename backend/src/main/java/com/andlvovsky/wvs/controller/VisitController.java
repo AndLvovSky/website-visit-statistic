@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -23,7 +25,10 @@ public class VisitController {
 
   @PostMapping("/{apiKey}")
   @ResponseStatus(HttpStatus.CREATED)
-  public void visit(@RequestBody VisitDto visit, @PathVariable String apiKey) {
-    visitService.visit(visit, apiKey);
+  public void visit(
+      @RequestBody VisitDto visit,
+      @PathVariable String apiKey,
+      HttpServletRequest request) {
+    visitService.visit(visit, apiKey, request.getRemoteAddr());
   }
 }
