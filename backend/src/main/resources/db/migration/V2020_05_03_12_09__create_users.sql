@@ -1,7 +1,7 @@
 create sequence users_seq start with 1 increment by 1;
 
 create table users (
-    id bigint primary key default nextval('users_seq'::regclass),
+    id bigint primary key default nextval('users_seq'),
     username varchar(64) not null unique,
     full_name varchar(128) not null,
     password varchar(64) not null

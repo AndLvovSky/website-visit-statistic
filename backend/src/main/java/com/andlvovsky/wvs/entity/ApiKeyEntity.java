@@ -1,39 +1,39 @@
 package com.andlvovsky.wvs.entity;
 
-import org.hibernate.annotations.Immutable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 @Entity
 @Getter
-@Immutable
-@Table(name = "users")
+@Setter
+@NoArgsConstructor
+@Table(name = "api_key")
 @ToString(onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class UserEntity {
+public class ApiKeyEntity {
   @Id
   @ToString.Include
   @EqualsAndHashCode.Include
-  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_seq")
-  @SequenceGenerator(name = "users_seq", sequenceName = "users_seq", allocationSize = 1)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "api_key_seq")
+  @SequenceGenerator(name = "api_key_seq", sequenceName = "api_key_seq", allocationSize = 1)
   private Long id;
 
-  @Column(name = "username", nullable = false, unique = true)
-  private String username;
+  @OneToOne(fetch = FetchType.LAZY, optional = false)
+  private SiteEntity site;
 
-  @Column(name = "full_name", nullable = false)
-  private String fullName;
-
-  @Column(name = "password", nullable = false)
-  private String password;
+  @Column(name = "key", nullable = false, unique = true)
+  private String key;
 }

@@ -2,22 +2,15 @@
 <html lang="en">
     <meta charset="UTF-8">
     <title>Home</title>
+    <!-- Copy these lines into header of your website: -->
+    <!-- BEGIN -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="http://localhost:8787/js/visit.js"></script>
     <script>
-        $.ajax({
-            url: "http://api.ipgeolocation.io/ipgeo?apiKey=bdc584375cf94dda934bf6cea7879c30",
-            type: "GET",
-            crossDomain: true,
-            success: function (response) {
-                console.log(response)
-
-            },
-            error: function (err) {
-                console.log(err)
-            }
-        });
-        console.log($.browser)
+        let apiKey = '6a36d434-146b-4457-8d81-d7e6b71bdaf5'; // write the api key for your site
+        visit(apiKey)
     </script>
+    <!-- END -->
 </head>
 <body>
    <h1>Test client</h1>

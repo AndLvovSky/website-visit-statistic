@@ -1,11 +1,11 @@
 package com.andlvovsky.wvs.controller;
 
-import com.andlvovsky.wvs.dto.VisitDto;
+import com.andlvovsky.wvs.dto.NewSiteDto;
+import com.andlvovsky.wvs.dto.SiteKey;
 import com.andlvovsky.wvs.meta.Endpoint;
-import com.andlvovsky.wvs.service.VisitService;
+import com.andlvovsky.wvs.service.SiteService;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,14 +16,14 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(Endpoint.VISIT)
-public class VisitController {
+@RequestMapping(Endpoint.SITE)
+public class SiteController {
 
-  private final VisitService visitService;
+  private final SiteService siteService;
 
-  @PostMapping("/{apiKey}")
+  @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public void visit(@RequestBody VisitDto visit, @PathVariable String apiKey) {
-    visitService.visit(visit, apiKey);
+  public SiteKey create(@RequestBody NewSiteDto site) {
+    return siteService.createSite(site);
   }
 }
