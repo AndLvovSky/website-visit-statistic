@@ -1,4 +1,4 @@
-package com.andlvovsky.websitevisitstatistics.controller;
+package com.andlvovsky.wvs.controller;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5435/wvs
+    username: postgres
+    password: password
+
+server:
+  port: 8787

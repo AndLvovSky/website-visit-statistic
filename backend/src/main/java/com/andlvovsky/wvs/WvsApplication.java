@@ -1,13 +1,13 @@
-package com.andlvovsky.websitevisitstatistics;
+package com.andlvovsky.wvs;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class WebsiteVisitStatisticsApplication {
+public class WvsApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(WebsiteVisitStatisticsApplication.class, args);
+    SpringApplication.run(WvsApplication.class, args);
   }
 
 }

@@ -1,10 +1,10 @@
-package com.andlvovsky.websitevisitstatistics;
+package com.andlvovsky.wvs;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class WebsiteVisitStatisticsApplicationTests {
+class WvsApplicationTests {
 
   @Test
   void contextLoads() {
