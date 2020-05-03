@@ -45,7 +45,7 @@ public class VisitEntity {
 
   @Column(name = "device", nullable = false)
   @Enumerated(EnumType.STRING)
-  private Device device = Device.PC;
+  private Device device;
 
   @Column(name = "country", nullable = false)
   private String country = "Ukraine";
