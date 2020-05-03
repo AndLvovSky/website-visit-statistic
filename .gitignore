@@ -71,5 +71,5 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 
 # Custom
-client/client.iml
+integration/integration.iml
 .idea/**
