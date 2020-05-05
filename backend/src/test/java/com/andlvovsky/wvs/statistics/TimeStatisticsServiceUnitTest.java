@@ -34,9 +34,11 @@ public class TimeStatisticsServiceUnitTest {
   public void shouldGetVisitsPerDayOfWeek() {
     // given
     List<VisitEntity> visitEntities = Arrays.asList(
+        VisitEntity.builder().time(LocalDate.of(2020, 5, 14).atStartOfDay()).build(),
         VisitEntity.builder().time(LocalDate.of(2020, 5, 12).atStartOfDay()).build(),
         VisitEntity.builder().time(LocalDate.of(2020, 5, 11).atStartOfDay()).build(),
-        VisitEntity.builder().time(LocalDate.of(2020, 5, 11).atStartOfDay()).build()
+        VisitEntity.builder().time(LocalDate.of(2020, 5, 11).atStartOfDay()).build(),
+        VisitEntity.builder().time(LocalDate.of(2020, 5, 8).atStartOfDay()).build()
     );
     when(visitRepository.findBySiteIdAndTimeBetween(any(), any(), any()))
         .thenReturn(visitEntities);
@@ -46,13 +48,13 @@ public class TimeStatisticsServiceUnitTest {
 
     // then
     assertThat(timeVisitsDtos).isEqualTo(Arrays.asList(
-       new TimeVisitsDto("FRIDAY", 0),
+       new TimeVisitsDto("FRIDAY", 1),
        new TimeVisitsDto("SATURDAY", 0),
        new TimeVisitsDto("SUNDAY", 0),
        new TimeVisitsDto("MONDAY", 2),
        new TimeVisitsDto("TUESDAY", 1),
        new TimeVisitsDto("WEDNESDAY", 0),
-       new TimeVisitsDto("THURSDAY", 0)
+       new TimeVisitsDto("THURSDAY", 1)
     ));
     verify(visitRepository).findBySiteIdAndTimeBetween(
         eq(1L),
