@@ -74,3 +74,4 @@ fabric.properties
 integration/integration.iml
 frontend/frontend.iml
 .idea/**
+spy.log

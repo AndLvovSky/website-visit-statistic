@@ -1,8 +1,14 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5435/wvs
+    url: jdbc:p6spy:postgresql://localhost:5435/wvs
     username: postgres
     password: password
+    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+  jpa:
+    properties:
+      hibernate:
+        show_sql: false
+        format_sql: true
 
 server:
   port: 8787
