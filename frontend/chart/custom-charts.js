@@ -6,7 +6,7 @@ export default {
     data: {
       labels: timeVisits.map(item => item.time),
       datasets: [{
-        label: '# of Visits per Day of Week',
+        label: '# of Visits',
         data: timeVisits.map(item => item.visits),
         backgroundColor: 'rgba(54, 162, 235, 0.2)',
         borderColor: 'rgba(54, 162, 235, 1)',
@@ -24,6 +24,19 @@ export default {
         }]
       },
       aspectRatio: 3
+    }
+  })),
+  createDeviceVisitsChart: (canvas, deviceVisits) => (new Chart(canvas, {
+    type: 'doughnut',
+    data: {
+      labels: deviceVisits.map(item => item.device),
+      datasets: [{
+        data: deviceVisits.map(item => item.visits),
+        backgroundColor: [
+          'rgba(255, 99, 71)',
+          'rgba(46, 112, 136)'
+        ]
+      }]
     }
   }))
 }
