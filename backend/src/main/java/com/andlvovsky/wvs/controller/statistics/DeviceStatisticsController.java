@@ -1,8 +1,8 @@
 package com.andlvovsky.wvs.controller.statistics;
 
-import com.andlvovsky.wvs.dto.statistics.TimeVisitsDto;
+import com.andlvovsky.wvs.dto.statistics.DeviceVisitsDto;
 import com.andlvovsky.wvs.meta.Endpoint;
-import com.andlvovsky.wvs.service.statistics.TimeStatisticsService;
+import com.andlvovsky.wvs.service.statistics.DeviceStatisticsService;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,13 +15,13 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(Endpoint.TIME_STATISTICS)
-public class TimeStatisticsController {
+@RequestMapping(Endpoint.DEVICE_STATISTICS)
+public class DeviceStatisticsController {
 
-  private final TimeStatisticsService timeStatisticsService;
+  private final DeviceStatisticsService deviceStatisticsService;
 
   @GetMapping("/visits/week/{siteId}")
-  public List<TimeVisitsDto> getVisitsPerDayOfWeek(@PathVariable Long siteId) {
-    return timeStatisticsService.getVisitsPerDayOfWeek(siteId);
+  public List<DeviceVisitsDto> getVisitsPerDeviceForTheLastWeek(@PathVariable Long siteId) {
+    return deviceStatisticsService.getVisitsPerDeviceForTheLastWeek(siteId);
   }
 }
