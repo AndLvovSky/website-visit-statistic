@@ -1,35 +1,55 @@
 <template>
   <div class="container-fluid">
-    <div class="h3 text-center">
-      Number of visits per day for the last week
+    <div class="row">
+      <div class="col-sm">
+        <div class="h3 text-center">
+          Visits per day for the last week
+        </div>
+        <BarChart :data="timeVisits" />
+      </div>
+      <div class="col-sm">
+        <div class="h3 text-center">
+          Visits per device for the last week
+        </div>
+        <DoughnutChart :data="deviceVisits" />
+      </div>
     </div>
-    <canvas id="barChart" />
-    <div class="h3 mt-5 text-center">
-      Number of visits per device for the last week
-    </div>
-    <canvas id="doughnutChart" />
   </div>
 </template>
 
 <script>
-import Chart from '../chart/custom-charts.js'
+import BarChart from '../components/chart/BarChart'
+import DoughnutChart from '../components/chart/DoughnutChart'
 
 export default {
+  components: {
+    BarChart,
+    DoughnutChart
+  },
+  data () {
+    return {
+      timeVisits: [],
+      deviceVisits: []
+    }
+  },
   async mounted () {
-    const timeVisits = await this.loadVisitsPerDayOfWeek()
-    const barCanvas = document.getElementById('barChart').getContext('2d')
-    Chart.createTimeVisitsChart(barCanvas, timeVisits)
-
-    const deviceVisits = await this.loadDeviceVisitsForTheLastWeek()
-    const doughnutCanvas = document.getElementById('doughnutChart').getContext('2d')
-    Chart.createDeviceVisitsChart(doughnutCanvas, deviceVisits)
+    this.timeVisits = await this.loadVisitsPerDayOfWeek()
+    this.deviceVisits = await this.loadDeviceVisitsForTheLastWeek()
   },
   methods: {
-    loadVisitsPerDayOfWeek () {
-      return this.$axios.$get('/statistics/time/visits/week/1')
+    async loadVisitsPerDayOfWeek () {
+      const data = await this.$axios.$get('/statistics/time/visits/week/1')
+      return data.map(item => ({
+        label: item.time,
+        value: item.visits
+      }))
     },
-    loadDeviceVisitsForTheLastWeek () {
-      return this.$axios.$get('/statistics/device/visits/week/1')
+    async loadDeviceVisitsForTheLastWeek () {
+      const data = await this.$axios.$get('/statistics/device/visits/week/1')
+      return data.map(item => ({
+        label: item.device,
+        value: item.visits
+      }))
     }
   }
 }
