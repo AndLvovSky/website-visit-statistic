@@ -1,56 +1,25 @@
 <template>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-sm">
-        <div class="h3 text-center">
-          Visits per day for the last week
-        </div>
-        <BarChart :data="timeVisits" />
-      </div>
-      <div class="col-sm">
-        <div class="h3 text-center">
-          Visits per device for the last week
-        </div>
-        <DoughnutChart :data="deviceVisits" />
-      </div>
-    </div>
+  <div class="container">
+    <Sites :sites="sites" />
   </div>
 </template>
 
 <script>
-import BarChart from '../components/chart/BarChart'
-import DoughnutChart from '../components/chart/DoughnutChart'
+import { mapActions, mapState } from 'vuex'
+import Sites from '../components/Sites'
 
 export default {
   components: {
-    BarChart,
-    DoughnutChart
+    Sites
   },
-  data () {
-    return {
-      timeVisits: [],
-      deviceVisits: []
-    }
+  computed: {
+    ...mapState(['sites'])
   },
-  async mounted () {
-    this.timeVisits = await this.loadVisitsPerDayOfWeek()
-    this.deviceVisits = await this.loadDeviceVisitsForTheLastWeek()
+  mounted () {
+    this.loadSites()
   },
   methods: {
-    async loadVisitsPerDayOfWeek () {
-      const data = await this.$axios.$get('/statistics/time/visits/week/1')
-      return data.map(item => ({
-        label: item.time,
-        value: item.visits
-      }))
-    },
-    async loadDeviceVisitsForTheLastWeek () {
-      const data = await this.$axios.$get('/statistics/device/visits/week/1')
-      return data.map(item => ({
-        label: item.device,
-        value: item.visits
-      }))
-    }
+    ...mapActions(['loadSites'])
   }
 }
 </script>

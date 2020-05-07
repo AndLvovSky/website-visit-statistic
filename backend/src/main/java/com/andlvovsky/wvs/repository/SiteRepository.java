@@ -14,5 +14,5 @@ public interface SiteRepository extends JpaRepository<SiteEntity, Long> {
   @Query("select s from SiteEntity s inner join ApiKeyEntity k on s.id = k.site.id where k.key = :apiKey")
   Optional<SiteEntity> findByApiKey(@Param("apiKey") String apiKey);
 
-  List<SiteEntity> findByUser(UserEntity user);
+  List<SiteEntity> findByUserOrderByCreatedOnDesc(UserEntity user);
 }

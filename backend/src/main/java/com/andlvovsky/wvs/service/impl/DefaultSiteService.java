@@ -42,7 +42,7 @@ public class DefaultSiteService implements SiteService {
 
   @Override
   public List<SiteDto> getAll() {
-    return siteRepository.findByUser(userServiceLocal.getCurrentUser()).stream()
+    return siteRepository.findByUserOrderByCreatedOnDesc(userServiceLocal.getCurrentUser()).stream()
         .map(siteMapper::toDto)
         .collect(toList());
   }

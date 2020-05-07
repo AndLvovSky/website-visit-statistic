@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(Endpoint.SITE)
+@RequestMapping(Endpoint.SITES)
 public class SiteController {
 
   private final SiteService siteService;

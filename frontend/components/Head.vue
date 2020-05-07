@@ -1,5 +1,5 @@
 <template>
-  <b-jumbotron>
+  <b-jumbotron class="mb-0">
     <template #header>
       Website Visit Statistics Console
     </template>
