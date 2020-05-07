@@ -27,4 +27,11 @@ public class DefaultApiKeyServiceLocal implements ApiKeyServiceLocal {
     apiKey.setKey(apiKeyGenerator.generateApiKey());
     apiKeyRepository.save(apiKey);
   }
+
+  @Override
+  public String getForSite(SiteEntity site) {
+    return apiKeyRepository.findBySite(site)
+        .orElseThrow(() -> new IllegalArgumentException("Api key for site " + site.getId() + " not found"))
+        .getKey();
+  }
 }

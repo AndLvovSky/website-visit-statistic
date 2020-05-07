@@ -1,6 +1,8 @@
 package com.andlvovsky.wvs.mapper;
 
+import com.andlvovsky.wvs.dto.FullSiteDto;
 import com.andlvovsky.wvs.dto.NewSiteDto;
+import com.andlvovsky.wvs.dto.SiteDto;
 import com.andlvovsky.wvs.entity.SiteEntity;
 
 import org.mapstruct.Mapper;
@@ -12,4 +14,9 @@ public interface SiteMapper {
   @Mapping(target = "user", ignore = true)
   @Mapping(target = "createdOn", ignore = true)
   SiteEntity toEntity(NewSiteDto dto);
+
+  SiteDto toDto(SiteEntity site);
+
+  @Mapping(target = "apiKey", ignore = true)
+  FullSiteDto toFullDto(SiteEntity site);
 }
