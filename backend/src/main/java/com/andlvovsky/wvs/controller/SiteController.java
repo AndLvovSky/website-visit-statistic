@@ -8,6 +8,7 @@ import com.andlvovsky.wvs.meta.Endpoint;
 import com.andlvovsky.wvs.service.SiteService;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,5 +48,11 @@ public class SiteController {
   @PutMapping
   public FullSiteDto update(@RequestBody FullSiteDto site) {
     return siteService.update(site);
+  }
+
+  @DeleteMapping("/{siteId}")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void delete(@PathVariable Long siteId) {
+    siteService.delete(siteId);
   }
 }

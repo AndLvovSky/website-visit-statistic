@@ -15,4 +15,6 @@ public interface SiteService {
   FullSiteDto get(Long siteId);
 
   FullSiteDto update(FullSiteDto site);
+
+  void delete(Long siteId);
 }

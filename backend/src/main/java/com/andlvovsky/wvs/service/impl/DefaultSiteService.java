@@ -65,6 +65,12 @@ public class DefaultSiteService implements SiteService {
     SiteEntity siteEntity = siteServiceLocal.get(siteDto.getId());
     SiteEntity newSiteEntity = siteMapper.mergeToEntity(siteEntity, siteDto);
     siteRepository.save(newSiteEntity);
-    return siteMapper.toFullDto(newSiteEntity);
+    return siteMapper.toFullDto(newSiteEntity, siteDto.getApiKey());
+  }
+
+  @Override
+  @Transactional
+  public void delete(Long siteId) {
+    siteRepository.deleteById(siteId);
   }
 }

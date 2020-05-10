@@ -22,6 +22,13 @@ export default {
     },
     createSite ({ commit }, { site }) {
       return this.$axios.$post('/sites', site)
+    },
+    async updateSite ({ commit }, { site }) {
+      const data = await this.$axios.$put('/sites', site)
+      commit('setSite', data)
+    },
+    deleteSite ({ commit }, { siteId }) {
+      return this.$axios.$delete(`/sites/${siteId}`)
     }
   }
 }

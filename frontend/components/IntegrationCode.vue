@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="h4 mt-5">
+    <div class="h4">
       Copy these lines into header of your website:
     </div>
     <pre v-highlightjs="code">

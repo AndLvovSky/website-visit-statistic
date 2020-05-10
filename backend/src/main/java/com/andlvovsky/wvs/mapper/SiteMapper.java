@@ -21,6 +21,8 @@ public interface SiteMapper {
   @Mapping(target = "apiKey", ignore = true)
   FullSiteDto toFullDto(SiteEntity entity);
 
+  FullSiteDto toFullDto(SiteEntity entity, String apiKey);
+
   @Mapping(target = "id", ignore = true)
   @Mapping(target = "createdOn", ignore = true)
   SiteEntity mergeToEntity(@MappingTarget SiteEntity entity, FullSiteDto dto);
