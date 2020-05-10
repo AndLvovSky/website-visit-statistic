@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class FullSiteDto {
-  private String id;
+  private Long id;
   private String name;
   private String link;
   private ZonedDateTime createdOn;

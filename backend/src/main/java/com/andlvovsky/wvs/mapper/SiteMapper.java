@@ -7,6 +7,7 @@ import com.andlvovsky.wvs.entity.SiteEntity;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface SiteMapper {
@@ -15,8 +16,12 @@ public interface SiteMapper {
   @Mapping(target = "createdOn", ignore = true)
   SiteEntity toEntity(NewSiteDto dto);
 
-  SiteDto toDto(SiteEntity site);
+  SiteDto toDto(SiteEntity entity);
 
   @Mapping(target = "apiKey", ignore = true)
-  FullSiteDto toFullDto(SiteEntity site);
+  FullSiteDto toFullDto(SiteEntity entity);
+
+  @Mapping(target = "id", ignore = true)
+  @Mapping(target = "createdOn", ignore = true)
+  SiteEntity mergeToEntity(@MappingTarget SiteEntity entity, FullSiteDto dto);
 }

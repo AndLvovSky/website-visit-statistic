@@ -7,18 +7,18 @@
       You don't have any site yet
     </div>
     <b-list-group>
-      <Site v-for="site in sites" :key="site.id" :site="site" />
+      <SiteBriefInfo v-for="site in sites" :key="site.id" :site="site" />
     </b-list-group>
   </div>
 </template>
 
 <script>
-import Site from './Site'
+import SiteBriefInfo from './SiteBriefInfo'
 
 export default {
   name: 'Sites',
   components: {
-    Site
+    SiteBriefInfo
   },
   props: {
     sites: {

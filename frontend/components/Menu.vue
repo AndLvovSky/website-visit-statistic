@@ -5,8 +5,11 @@
         <b-dropdown-item :to="`/${getSiteSuffix()}`" exact-active-class="active">
           Sites
         </b-dropdown-item>
-        <b-dropdown-item :to="`/site${getSiteSuffix()}`" exact-active-class="active">
+        <b-dropdown-item :to="`/current-site${getSiteSuffix()}`" exact-active-class="active">
           Current Site
+        </b-dropdown-item>
+        <b-dropdown-item :to="`/new-site${getSiteSuffix()}`" exact-active-class="active">
+          New Site
         </b-dropdown-item>
       </b-nav-dropdown>
       <b-nav-dropdown text="Statistics">
@@ -26,7 +29,7 @@ export default {
   name: 'Menu',
   methods: {
     getSiteSuffix () {
-      return `?siteId=${this.$route.query.siteId}`
+      return this.$route.query.siteId ? `?siteId=${this.$route.query.siteId}` : ''
     }
   }
 }

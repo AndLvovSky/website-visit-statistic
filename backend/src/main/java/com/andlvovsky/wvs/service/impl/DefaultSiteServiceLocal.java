@@ -21,4 +21,10 @@ public class DefaultSiteServiceLocal implements SiteServiceLocal {
     return siteRepository.findByApiKey(apiKey)
         .orElseThrow(() -> new IllegalArgumentException(String.format("Api key %s is not valid", apiKey)));
   }
+
+  @Override
+  public SiteEntity get(Long id) {
+    return siteRepository.findById(id)
+        .orElseThrow(() -> new IllegalArgumentException(String.format("Site with id %d not found", id)));
+  }
 }

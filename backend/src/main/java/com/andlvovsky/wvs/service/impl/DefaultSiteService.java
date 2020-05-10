@@ -9,6 +9,7 @@ import com.andlvovsky.wvs.mapper.SiteMapper;
 import com.andlvovsky.wvs.repository.SiteRepository;
 import com.andlvovsky.wvs.service.ApiKeyServiceLocal;
 import com.andlvovsky.wvs.service.SiteService;
+import com.andlvovsky.wvs.service.SiteServiceLocal;
 import com.andlvovsky.wvs.service.UserServiceLocal;
 
 import org.springframework.stereotype.Service;
@@ -29,6 +30,7 @@ public class DefaultSiteService implements SiteService {
   private final SiteMapper siteMapper;
   private final UserServiceLocal userServiceLocal;
   private final ApiKeyServiceLocal apiKeyServiceLocal;
+  private final SiteServiceLocal siteServiceLocal;
 
   @Override
   @Transactional
@@ -55,5 +57,14 @@ public class DefaultSiteService implements SiteService {
     String apiKey = apiKeyServiceLocal.getForSite(siteEntity);
     siteDto.setApiKey(apiKey);
     return siteDto;
+  }
+
+  @Override
+  @Transactional
+  public FullSiteDto update(FullSiteDto siteDto) {
+    SiteEntity siteEntity = siteServiceLocal.get(siteDto.getId());
+    SiteEntity newSiteEntity = siteMapper.mergeToEntity(siteEntity, siteDto);
+    siteRepository.save(newSiteEntity);
+    return siteMapper.toFullDto(newSiteEntity);
   }
 }

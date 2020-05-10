@@ -13,4 +13,6 @@ public interface SiteService {
   List<SiteDto> getAll();
 
   FullSiteDto get(Long siteId);
+
+  FullSiteDto update(FullSiteDto site);
 }

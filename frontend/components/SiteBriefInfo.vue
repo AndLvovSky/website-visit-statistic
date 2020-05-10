@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-list-group-item :to="`/site?siteId=${site.id}`" :class="{ 'active-site': isSiteChosen() }">
+    <b-list-group-item :to="`/current-site?siteId=${site.id}`" :class="{ 'active-site': isSiteChosen() }">
       {{ site.name }}
     </b-list-group-item>
   </div>
@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  name: 'Site',
+  name: 'SiteBriefInfo',
   props: {
     site: {
       type: Object,

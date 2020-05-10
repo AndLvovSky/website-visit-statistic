@@ -19,6 +19,9 @@ export default {
     async loadSite ({ commit }, { id }) {
       const data = await this.$axios.$get(`/sites/${id}`)
       commit('setSite', data)
+    },
+    createSite ({ commit }, { site }) {
+      return this.$axios.$post('/sites', site)
     }
   }
 }
