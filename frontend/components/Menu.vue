@@ -12,12 +12,18 @@
           New Site
         </b-dropdown-item>
       </b-nav-dropdown>
-      <b-nav-dropdown v-show="this.$route.query.siteId" text="Statistics">
-        <b-dropdown-item :to="`/statistics/time${getSiteSuffix()}`" exact-active-class="active">
-          Time
+      <b-nav-item :to="`/statistics/time${getSiteSuffix()}`" exact-active-class="active">
+        Time
+      </b-nav-item>
+      <b-nav-item :to="`/statistics/device${getSiteSuffix()}`" exact-active-class="active">
+        Device
+      </b-nav-item>
+      <b-nav-dropdown v-show="this.$route.query.siteId" text="Country">
+        <b-dropdown-item :to="`/statistics/country${getSiteSuffix()}`" exact-active-class="active">
+          Chart
         </b-dropdown-item>
-        <b-dropdown-item :to="`/statistics/device${getSiteSuffix()}`" exact-active-class="active">
-          Device
+        <b-dropdown-item :to="`/statistics/country-map${getSiteSuffix()}`" exact-active-class="active">
+          Map
         </b-dropdown-item>
       </b-nav-dropdown>
     </b-navbar-nav>

@@ -30,8 +30,10 @@ export default {
           data: this.data.map(item => item.value),
           backgroundColor: [
             'rgba(255, 99, 71)',
-            'rgba(46, 112, 136)'
-          ]
+            'rgba(46, 112, 136)',
+            'rgba(46, 200, 136)',
+            'rgba(200, 244, 23)'
+          ] // TODO: Support more colors
         }]
       }
     }

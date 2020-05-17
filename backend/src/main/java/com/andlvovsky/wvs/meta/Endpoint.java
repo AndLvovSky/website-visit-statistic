@@ -10,4 +10,5 @@ public class Endpoint {
   public static final String STATISTICS = "/statistics";
   public static final String TIME_STATISTICS = STATISTICS + "/time";
   public static final String DEVICE_STATISTICS = STATISTICS + "/device";
+  public static final String COUNTRY_STATISTICS = STATISTICS + "/country";
 }

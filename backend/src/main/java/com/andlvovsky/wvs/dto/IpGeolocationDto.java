@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class IpGeolocationDto {
-  @JsonProperty("country_name")
+  @JsonProperty("country_code2")
   private String country;
 }

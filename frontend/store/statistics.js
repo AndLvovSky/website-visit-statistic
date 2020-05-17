@@ -1,11 +1,13 @@
 export default {
   state: {
     timeVisits: [],
-    deviceVisits: []
+    deviceVisits: [],
+    countryVisits: []
   },
   mutations: {
     setTimeVisits: (state, timeVisits) => (state.timeVisits = timeVisits),
-    setDeviceVisits: (state, deviceVisits) => (state.deviceVisits = deviceVisits)
+    setDeviceVisits: (state, deviceVisits) => (state.deviceVisits = deviceVisits),
+    setCountryVisits: (state, countryVisits) => (state.countryVisits = countryVisits)
   },
   actions: {
     async loadVisitsPerDayOfWeek ({ commit }, { siteId }) {
@@ -39,6 +41,22 @@ export default {
         value: item.visits
       }))
       commit('setDeviceVisits', deviceVisits)
+    },
+    async loadCountryVisitsForTheLastWeek ({ commit }, { siteId }) {
+      const data = await this.$axios.$get(`/statistics/country/visits/week/${siteId}`)
+      const countryVisits = data.map(item => ({
+        label: item.country,
+        value: item.visits
+      }))
+      commit('setCountryVisits', countryVisits)
+    },
+    async loadCountryVisitsForTheLastMonth ({ commit }, { siteId }) {
+      const data = await this.$axios.$get(`/statistics/country/visits/month/${siteId}`)
+      const countryVisits = data.map(item => ({
+        label: item.country,
+        value: item.visits
+      }))
+      commit('setCountryVisits', countryVisits)
     }
   }
 }

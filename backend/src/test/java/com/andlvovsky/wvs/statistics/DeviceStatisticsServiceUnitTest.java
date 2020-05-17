@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-public class DeviceStatisticsUnitTest {
+public class DeviceStatisticsServiceUnitTest {
   private VisitServiceLocal visitServiceLocal = Mockito.mock(VisitServiceLocal.class);
   private DateTimeService dateTimeService =  Mockito.mock(DateTimeService.class);
   private DeviceStatisticsService deviceStatisticsService = new DefaultDeviceStatisticsService(visitServiceLocal, dateTimeService);
