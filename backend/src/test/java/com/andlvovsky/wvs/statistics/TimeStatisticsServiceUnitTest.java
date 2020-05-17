@@ -95,4 +95,36 @@ public class TimeStatisticsServiceUnitTest {
     assertThat(timeVisitsDtos.get(0).getTime()).isEqualTo("15");
     assertThat(timeVisitsDtos.get(29).getTime()).isEqualTo("14");
   }
+
+  @Test
+  public void shouldGetVisitsPerHour() {
+    // given
+    List<VisitEntity> visitEntities = Arrays.asList(
+        VisitEntity.builder().time(LocalDateTime.of(2020, 5, 14, 6, 0, 0)).build(),
+        VisitEntity.builder().time(LocalDateTime.of(2020, 5, 14, 9, 0, 0)).build(),
+        VisitEntity.builder().time(LocalDateTime.of(2020, 5, 14, 9, 0, 0)).build(),
+        VisitEntity.builder().time(LocalDateTime.of(2020, 5, 14, 15, 0, 0)).build(),
+        VisitEntity.builder().time(LocalDateTime.of(2020, 5, 14, 20, 0, 0)).build()
+    );
+    when(visitServiceLocal.getVisits(any()))
+        .thenReturn(visitEntities);
+
+    // when
+    List<TimeVisitsDto> timeVisitsDtos = timeStatisticsService.getVisitsPerHour(1L);
+
+    // then
+    assertThat(timeVisitsDtos.size()).isEqualTo(24);
+    int totalVisits = timeVisitsDtos.stream()
+        .mapToInt(TimeVisitsDto::getVisits)
+        .sum();
+    assertThat(totalVisits).isEqualTo(5);
+    assertThat(timeVisitsDtos).contains(
+        new TimeVisitsDto("06 AM", 1),
+        new TimeVisitsDto("09 AM", 2),
+        new TimeVisitsDto("03 PM", 1),
+        new TimeVisitsDto("08 PM", 1)
+    );
+    assertThat(timeVisitsDtos.get(0).getTime()).isEqualTo("12 AM");
+    assertThat(timeVisitsDtos.get(23).getTime()).isEqualTo("11 PM");
+  }
 }

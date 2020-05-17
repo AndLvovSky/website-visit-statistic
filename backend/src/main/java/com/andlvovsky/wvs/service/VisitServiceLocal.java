@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface VisitServiceLocal {
   List<VisitEntity> getVisits(Long siteId, DateTimeInterval interval);
+
+  List<VisitEntity> getVisits(Long siteId);
 }

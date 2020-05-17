@@ -26,6 +26,14 @@ export default {
       }))
       commit('setTimeVisits', timeVisits)
     },
+    async loadVisitsPerHour ({ commit }, { siteId }) {
+      const data = await this.$axios.$get(`/statistics/time/visits/day/${siteId}`)
+      const timeVisits = data.map(item => ({
+        label: item.time,
+        value: item.visits
+      }))
+      commit('setTimeVisits', timeVisits)
+    },
     async loadDeviceVisitsForTheLastWeek ({ commit }, { siteId }) {
       const data = await this.$axios.$get(`/statistics/device/visits/week/${siteId}`)
       const deviceVisits = data.map(item => ({

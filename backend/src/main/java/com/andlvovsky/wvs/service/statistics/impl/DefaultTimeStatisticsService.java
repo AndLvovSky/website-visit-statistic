@@ -10,12 +10,17 @@ import com.andlvovsky.wvs.service.statistics.TimeStatisticsService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import lombok.RequiredArgsConstructor;
@@ -60,6 +65,35 @@ public class DefaultTimeStatisticsService implements TimeStatisticsService {
       timeVisits.add(createTimeVisitsForMonth(visitsPerDate, date));
     }
     return timeVisits;
+  }
+
+  @Override
+  public List<TimeVisitsDto> getVisitsPerHour(Long siteId) {
+    List<VisitEntity> visits = visitServiceLocal.getVisits(siteId);
+    Map<Integer, Long> hourVisits = visits.stream()
+        .map(VisitEntity::getTime)
+        .map(LocalDateTime::getHour)
+        .collect(groupingBy(Function.identity(), counting()));
+    IntStream.range(0, 24)
+        .forEach(hour -> hourVisits.putIfAbsent(hour, 0L));
+    return hourVisits.entrySet().stream()
+        .sorted(Map.Entry.comparingByKey())
+        .map(this::createTimeVisitsPerHour)
+        .collect(toList());
+  }
+
+  private TimeVisitsDto createTimeVisitsPerHour(Map.Entry<Integer, Long> hourVisits) {
+    SimpleDateFormat inputFormat = new SimpleDateFormat("HH");
+    SimpleDateFormat outputFormat = new SimpleDateFormat("hh a");
+    String hour = String.format("%02d", hourVisits.getKey());
+    Date inputDate;
+    try {
+      inputDate = inputFormat.parse(hour);
+    } catch (ParseException e) {
+      throw new IllegalArgumentException(e.getMessage(), e);
+    }
+    String formattedHour = outputFormat.format(inputDate);
+    return new TimeVisitsDto(formattedHour, hourVisits.getValue().intValue());
   }
 
   private TimeVisitsDto createTimeVisitsForWeek(Map<LocalDate, Long> visitsPerDate, LocalDate date) {

@@ -8,4 +8,6 @@ public interface TimeStatisticsService {
   List<TimeVisitsDto> getVisitsPerDayOfWeek(Long siteId);
 
   List<TimeVisitsDto> getVisitsForLastMonth(Long siteId);
+
+  List<TimeVisitsDto> getVisitsPerHour(Long siteId);
 }

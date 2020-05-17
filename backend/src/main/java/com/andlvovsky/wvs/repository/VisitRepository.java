@@ -9,4 +9,6 @@ import java.util.List;
 
 public interface VisitRepository extends JpaRepository<VisitEntity, Long> {
   List<VisitEntity> findBySiteIdAndTimeBetween(Long siteId, LocalDateTime startTime, LocalDateTime endTime);
+
+  List<VisitEntity> findBySiteId(Long siteId);
 }

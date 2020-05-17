@@ -11,6 +11,9 @@
         <b-form-select-option value="month">
           Month
         </b-form-select-option>
+        <b-form-select-option value="day">
+          Day
+        </b-form-select-option>
       </b-form-select>
     </div>
     <b-alert v-if="!dataExists" show variant="warning" class="mt-4">
@@ -44,15 +47,17 @@ export default {
     this.loadVisits()
   },
   methods: {
-    ...mapActions('statistics', ['loadVisitsPerDayOfWeek', 'loadVisitsForTheLastMonth']),
+    ...mapActions('statistics', ['loadVisitsPerDayOfWeek', 'loadVisitsForTheLastMonth', 'loadVisitsPerHour']),
     loadVisits () {
       const params = {
         siteId: this.$route.query.siteId
       }
       if (this.duration === 'week') {
         this.loadVisitsPerDayOfWeek(params)
-      } else {
+      } else if (this.duration === 'month') {
         this.loadVisitsForTheLastMonth(params)
+      } else {
+        this.loadVisitsPerHour(params)
       }
     }
   }

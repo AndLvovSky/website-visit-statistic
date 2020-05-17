@@ -23,4 +23,9 @@ public class DefaultVisitServiceLocal implements VisitServiceLocal {
   public List<VisitEntity> getVisits(Long siteId, DateTimeInterval interval) {
     return visitRepository.findBySiteIdAndTimeBetween(siteId, interval.getStart(), interval.getEnd());
   }
+
+  @Override
+  public List<VisitEntity> getVisits(Long siteId) {
+    return visitRepository.findBySiteId(siteId);
+  }
 }
