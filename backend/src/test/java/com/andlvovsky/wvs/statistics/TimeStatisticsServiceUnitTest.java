@@ -57,4 +57,42 @@ public class TimeStatisticsServiceUnitTest {
        new TimeVisitsDto("THURSDAY", 1)
     ));
   }
+
+  @Test
+  public void shouldGetVisitsPerDayOfMonth() {
+    // given
+    List<VisitEntity> visitEntities = Arrays.asList(
+        VisitEntity.builder().time(LocalDate.of(2020, 5, 14).atStartOfDay()).build(),
+        VisitEntity.builder().time(LocalDate.of(2020, 5, 12).atStartOfDay()).build(),
+        VisitEntity.builder().time(LocalDate.of(2020, 5, 11).atStartOfDay()).build(),
+        VisitEntity.builder().time(LocalDate.of(2020, 5, 11).atStartOfDay()).build(),
+        VisitEntity.builder().time(LocalDate.of(2020, 5, 4).atStartOfDay()).build(),
+        VisitEntity.builder().time(LocalDate.of(2020, 4, 15).atStartOfDay()).build()
+    );
+    when(visitServiceLocal.getVisits(any(), any()))
+        .thenReturn(visitEntities);
+    when(dateTimeService.getLastMonthInterval()).thenReturn(new DateTimeInterval(
+        LocalDateTime.of(2020, 4, 15, 0, 0, 0),
+        LocalDateTime.of(2020, 5, 15, 0, 0, 0)
+    ));
+
+    // when
+    List<TimeVisitsDto> timeVisitsDtos = timeStatisticsService.getVisitsForLastMonth(1L);
+
+    // then
+    assertThat(timeVisitsDtos.size()).isEqualTo(30);
+    int totalVisits = timeVisitsDtos.stream()
+        .mapToInt(TimeVisitsDto::getVisits)
+        .sum();
+    assertThat(totalVisits).isEqualTo(6);
+    assertThat(timeVisitsDtos).contains(
+        new TimeVisitsDto("15", 1),
+        new TimeVisitsDto("4", 1),
+        new TimeVisitsDto("11", 2),
+        new TimeVisitsDto("12", 1),
+        new TimeVisitsDto("14", 1)
+    );
+    assertThat(timeVisitsDtos.get(0).getTime()).isEqualTo("15");
+    assertThat(timeVisitsDtos.get(29).getTime()).isEqualTo("14");
+  }
 }

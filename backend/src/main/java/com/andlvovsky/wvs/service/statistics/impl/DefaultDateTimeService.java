@@ -23,4 +23,11 @@ public class DefaultDateTimeService implements DateTimeService {
     LocalDateTime weekAgoDayStart = todayStart.minusWeeks(1);
     return new DateTimeInterval(weekAgoDayStart, todayStart);
   }
+
+  @Override
+  public DateTimeInterval getLastMonthInterval() {
+    LocalDateTime todayStart = LocalDate.now(clock).atStartOfDay();
+    LocalDateTime monthAgoDayStart = todayStart.minusMonths(1);
+    return new DateTimeInterval(monthAgoDayStart, todayStart);
+  }
 }

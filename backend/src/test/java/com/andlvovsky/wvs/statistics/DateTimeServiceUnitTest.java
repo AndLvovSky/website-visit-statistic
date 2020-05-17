@@ -27,4 +27,14 @@ public class DateTimeServiceUnitTest {
     assertThat(dateTimeInterval.getStart()).isEqualTo(LocalDateTime.of(2020, 5, 8, 0, 0, 0));
     assertThat(dateTimeInterval.getEnd()).isEqualTo(LocalDateTime.of(2020, 5, 15, 0, 0, 0));
   }
+
+  @Test
+  public void shouldReturnLastMonthInterval() {
+    // when
+    DateTimeInterval dateTimeInterval = dateTimeService.getLastMonthInterval();
+
+    // then
+    assertThat(dateTimeInterval.getStart()).isEqualTo(LocalDateTime.of(2020, 4, 15, 0, 0, 0));
+    assertThat(dateTimeInterval.getEnd()).isEqualTo(LocalDateTime.of(2020, 5, 15, 0, 0, 0));
+  }
 }

@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface TimeStatisticsService {
   List<TimeVisitsDto> getVisitsPerDayOfWeek(Long siteId);
+
+  List<TimeVisitsDto> getVisitsForLastMonth(Long siteId);
 }

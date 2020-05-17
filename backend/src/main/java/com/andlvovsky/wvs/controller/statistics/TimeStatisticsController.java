@@ -24,4 +24,9 @@ public class TimeStatisticsController {
   public List<TimeVisitsDto> getVisitsPerDayOfWeek(@PathVariable Long siteId) {
     return timeStatisticsService.getVisitsPerDayOfWeek(siteId);
   }
+
+  @GetMapping("/visits/month/{siteId}")
+  public List<TimeVisitsDto> getVisitsPerDayOfMonth(@PathVariable Long siteId) {
+    return timeStatisticsService.getVisitsForLastMonth(siteId);
+  }
 }

@@ -4,4 +4,6 @@ import com.andlvovsky.wvs.data.DateTimeInterval;
 
 public interface DateTimeService {
   DateTimeInterval getLastWeekInterval();
+
+  DateTimeInterval getLastMonthInterval();
 }
