@@ -3,15 +3,20 @@
     <div class="h3 text-center">
       Visits per day
     </div>
-    <b-form-select v-model="duration" class="duration-select" @change="loadVisits">
-      <b-form-select-option value="week">
-        Week
-      </b-form-select-option>
-      <b-form-select-option value="month">
-        Month
-      </b-form-select-option>
-    </b-form-select>
-    <BarChart :data="timeVisits" />
+    <div class="d-flex">
+      <b-form-select v-model="duration" class="duration-select" @change="loadVisits">
+        <b-form-select-option value="week">
+          Week
+        </b-form-select-option>
+        <b-form-select-option value="month">
+          Month
+        </b-form-select-option>
+      </b-form-select>
+    </div>
+    <b-alert v-if="!dataExists" show variant="warning" class="mt-4">
+      There is no data yet
+    </b-alert>
+    <BarChart :class="{'hidden' : !dataExists}" :data="timeVisits" />
   </div>
 </template>
 
@@ -30,7 +35,10 @@ export default {
     }
   },
   computed: {
-    ...mapState('statistics', ['timeVisits'])
+    ...mapState('statistics', ['timeVisits']),
+    dataExists () {
+      return !this.timeVisits.every(item => item.value === 0)
+    }
   },
   mounted () {
     this.loadVisits()

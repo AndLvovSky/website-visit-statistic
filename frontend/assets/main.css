@@ -1,4 +1,8 @@
 .duration-select {
   width: auto;
-  float: right;
+  margin-left: auto;
+}
+
+.hidden {
+  visibility: hidden;
 }

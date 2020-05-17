@@ -4,7 +4,12 @@
       Your Sites
     </div>
     <div v-if="sites.length === 0" class="h3">
-      You don't have any site yet
+      <div>
+        You don't have any site yet
+      </div>
+      <b-button class="mt-4" variant="primary" @click="$router.push('/new-site')">
+        Create New
+      </b-button>
     </div>
     <b-list-group>
       <SiteBriefInfo v-for="site in sites" :key="site.id" :site="site" />
