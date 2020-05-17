@@ -1,6 +1,6 @@
 alter table visit
     add column ip varchar(32),
-    add column actual_time timestamp;
+    add column actual_time timestamp default now();
 
 alter table visit
     alter column ip
