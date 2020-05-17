@@ -2,7 +2,10 @@ package com.andlvovsky.wvs.entity;
 
 import com.andlvovsky.wvs.meta.Device;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -53,4 +56,11 @@ public class VisitEntity {
 
   @Column(name = "country", nullable = false)
   private String country;
+
+  @Column(name = "ip", nullable = false)
+  private String ip;
+
+  @CreationTimestamp
+  @Column(name = "actual_time", nullable = false)
+  private ZonedDateTime actualTime;
 }

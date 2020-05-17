@@ -20,6 +20,8 @@ import lombok.RequiredArgsConstructor;
 @Transactional(readOnly = true)
 public class DefaultVisitService implements VisitService {
 
+  private static final String FALLBACK_COUNTRY = "US";
+
   private final VisitRepository visitRepository;
   private final SiteServiceLocal siteServiceLocal;
   private final DeviceAnalyzer deviceAnalyzer;
@@ -34,7 +36,8 @@ public class DefaultVisitService implements VisitService {
     visitEntity.setTime(visit.getTime());
     Device device = deviceAnalyzer.getDevice(visit.getUserAgent());
     visitEntity.setDevice(device);
-    String country = ipGeolocator.getCountryByIp(ip).orElse(null);
+    visitEntity.setIp(ip);
+    String country = ipGeolocator.getCountryByIp(ip).orElse(FALLBACK_COUNTRY);
     visitEntity.setCountry(country);
     visitRepository.save(visitEntity);
   }
