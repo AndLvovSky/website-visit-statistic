@@ -31,6 +31,14 @@ export default {
         value: item.visits
       }))
       commit('setDeviceVisits', deviceVisits)
+    },
+    async loadDeviceVisitsForTheLastMonth ({ commit }, { siteId }) {
+      const data = await this.$axios.$get(`/statistics/device/visits/month/${siteId}`)
+      const deviceVisits = data.map(item => ({
+        label: item.device,
+        value: item.visits
+      }))
+      commit('setDeviceVisits', deviceVisits)
     }
   }
 }

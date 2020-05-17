@@ -46,4 +46,26 @@ public class DeviceStatisticsUnitTest {
         new DeviceVisitsDto(Device.MOBILE, 1)
     ));
   }
+
+  @Test
+  public void shouldGetVisitsPerDeviceForTheLastMonth() {
+    // given
+    List<VisitEntity> visitEntities = Arrays.asList(
+        VisitEntity.builder().device(Device.PC).build(),
+        VisitEntity.builder().device(Device.PC).build(),
+        VisitEntity.builder().device(Device.MOBILE).build()
+    );
+    when(visitServiceLocal.getVisits(any(), any()))
+        .thenReturn(visitEntities);
+    when(dateTimeService.getLastMonthInterval()).thenReturn(new DateTimeInterval(LocalDateTime.now(), LocalDateTime.now()));
+
+    // when
+    List<DeviceVisitsDto> timeVisitsDtos = deviceStatisticsService.getVisitsPerDeviceForTheLastMonth(1L);
+
+    // then
+    assertThat(timeVisitsDtos).isEqualTo(Arrays.asList(
+        new DeviceVisitsDto(Device.PC, 2),
+        new DeviceVisitsDto(Device.MOBILE, 1)
+    ));
+  }
 }

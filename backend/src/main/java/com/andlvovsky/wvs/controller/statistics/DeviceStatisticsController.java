@@ -24,4 +24,9 @@ public class DeviceStatisticsController {
   public List<DeviceVisitsDto> getVisitsPerDeviceForTheLastWeek(@PathVariable Long siteId) {
     return deviceStatisticsService.getVisitsPerDeviceForTheLastWeek(siteId);
   }
+
+  @GetMapping("/visits/month/{siteId}")
+  public List<DeviceVisitsDto> getVisitsPerDeviceForTheLastMonth(@PathVariable Long siteId) {
+    return deviceStatisticsService.getVisitsPerDeviceForTheLastMonth(siteId);
+  }
 }

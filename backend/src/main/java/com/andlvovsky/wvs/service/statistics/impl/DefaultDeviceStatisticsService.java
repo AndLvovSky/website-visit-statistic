@@ -31,7 +31,18 @@ public class DefaultDeviceStatisticsService implements DeviceStatisticsService {
   public List<DeviceVisitsDto> getVisitsPerDeviceForTheLastWeek(Long siteId) {
     DateTimeInterval lastWeekInterval = dateTimeService.getLastWeekInterval();
     List<VisitEntity> visitsForTheLastWeek = visitServiceLocal.getVisits(siteId, lastWeekInterval);
-    return visitsForTheLastWeek.stream()
+    return getDeviceVisits(visitsForTheLastWeek);
+  }
+
+  @Override
+  public List<DeviceVisitsDto> getVisitsPerDeviceForTheLastMonth(Long siteId) {
+    DateTimeInterval lastMonthInterval = dateTimeService.getLastMonthInterval();
+    List<VisitEntity> visitsForTheLastMonth = visitServiceLocal.getVisits(siteId, lastMonthInterval);
+    return getDeviceVisits(visitsForTheLastMonth);
+  }
+
+  private List<DeviceVisitsDto> getDeviceVisits(List<VisitEntity> visits) {
+    return visits.stream()
         .collect(groupingBy(VisitEntity::getDevice, counting()))
         .entrySet().stream()
         .map(item -> new DeviceVisitsDto(item.getKey(), item.getValue().intValue()))

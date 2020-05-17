@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface DeviceStatisticsService {
   List<DeviceVisitsDto> getVisitsPerDeviceForTheLastWeek(Long siteId);
+
+  List<DeviceVisitsDto> getVisitsPerDeviceForTheLastMonth(Long siteId);
 }
