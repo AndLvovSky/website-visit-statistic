@@ -25,5 +25,6 @@ public interface SiteMapper {
 
   @Mapping(target = "id", ignore = true)
   @Mapping(target = "createdOn", ignore = true)
+  @Mapping(target = "user", ignore = true)
   SiteEntity mergeToEntity(@MappingTarget SiteEntity entity, FullSiteDto dto);
 }

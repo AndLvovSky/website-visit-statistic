@@ -119,12 +119,12 @@ public class TimeStatisticsServiceUnitTest {
         .sum();
     assertThat(totalVisits).isEqualTo(5);
     assertThat(timeVisitsDtos).contains(
-        new TimeVisitsDto("06 AM", 1),
-        new TimeVisitsDto("09 AM", 2),
-        new TimeVisitsDto("03 PM", 1),
-        new TimeVisitsDto("08 PM", 1)
+        new TimeVisitsDto("06 am", 1),
+        new TimeVisitsDto("09 am", 2),
+        new TimeVisitsDto("03 pm", 1),
+        new TimeVisitsDto("08 pm", 1)
     );
-    assertThat(timeVisitsDtos.get(0).getTime()).isEqualTo("12 AM");
-    assertThat(timeVisitsDtos.get(23).getTime()).isEqualTo("11 PM");
+    assertThat(timeVisitsDtos.get(0).getTime()).isEqualTo("12 am");
+    assertThat(timeVisitsDtos.get(23).getTime()).isEqualTo("11 pm");
   }
 }
