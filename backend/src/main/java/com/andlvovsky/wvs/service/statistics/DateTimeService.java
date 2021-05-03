@@ -6,4 +6,6 @@ public interface DateTimeService {
   DateTimeInterval getLastWeekInterval();
 
   DateTimeInterval getLastMonthInterval();
+
+  DateTimeInterval getInterval(String fromDate, String toDate);
 }

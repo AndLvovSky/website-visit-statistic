@@ -7,6 +7,7 @@ import com.andlvovsky.wvs.service.statistics.DeviceStatisticsService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -28,5 +29,14 @@ public class DeviceStatisticsController {
   @GetMapping("/visits/month/{siteId}")
   public List<DeviceVisitsDto> getVisitsPerDeviceForTheLastMonth(@PathVariable Long siteId) {
     return deviceStatisticsService.getVisitsPerDeviceForTheLastMonth(siteId);
+  }
+
+  @GetMapping("/visits/custom/{siteId}")
+  public List<DeviceVisitsDto> getVisitsPerDevice(
+      @PathVariable Long siteId,
+      @RequestParam String fromDate,
+      @RequestParam String toDate
+  ) {
+    return deviceStatisticsService.getVisitsPerDevice(siteId, fromDate, toDate);
   }
 }

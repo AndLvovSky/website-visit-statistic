@@ -8,4 +8,6 @@ public interface DeviceStatisticsService {
   List<DeviceVisitsDto> getVisitsPerDeviceForTheLastWeek(Long siteId);
 
   List<DeviceVisitsDto> getVisitsPerDeviceForTheLastMonth(Long siteId);
+
+  List<DeviceVisitsDto> getVisitsPerDevice(Long siteId, String fromDate, String toDate);
 }
