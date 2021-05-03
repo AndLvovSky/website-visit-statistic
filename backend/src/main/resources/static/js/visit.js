@@ -4,7 +4,8 @@ function visit(apiKey) {
         type: "POST",
         data: JSON.stringify({
             time: new Date().toLocaleString(),
-            userAgent: navigator.userAgent
+            userAgent: navigator.userAgent,
+            referralWebsite: new URL(document.location).searchParams.get("referral")
         }),
         crossDomain: true,
         contentType: "application/json"

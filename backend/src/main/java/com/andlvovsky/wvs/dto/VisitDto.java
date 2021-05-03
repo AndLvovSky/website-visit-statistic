@@ -17,4 +17,5 @@ public class VisitDto {
   private LocalDateTime time;
   @NotNull
   private String userAgent;
+  private String referralWebsite;
 }

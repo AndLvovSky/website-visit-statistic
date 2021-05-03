@@ -63,4 +63,7 @@ public class VisitEntity {
   @CreationTimestamp
   @Column(name = "actual_time", nullable = false)
   private ZonedDateTime actualTime;
+
+  @Column(name = "referral_website")
+  private String referralWebsite;
 }

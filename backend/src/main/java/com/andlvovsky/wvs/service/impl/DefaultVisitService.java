@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 public class DefaultVisitService implements VisitService {
 
   private static final String FALLBACK_COUNTRY = "US";
+  private static final String LOOPBACK_ADDRESS = "0:0:0:0:0:0:0:1";
 
   private final VisitRepository visitRepository;
   private final SiteServiceLocal siteServiceLocal;
@@ -37,8 +38,13 @@ public class DefaultVisitService implements VisitService {
     Device device = deviceAnalyzer.getDevice(visit.getUserAgent());
     visitEntity.setDevice(device);
     visitEntity.setIp(ip);
-    String country = ipGeolocator.getCountryByIp(ip).orElse(FALLBACK_COUNTRY);
-    visitEntity.setCountry(country);
+    if (!LOOPBACK_ADDRESS.equals(ip)) {
+      String country = ipGeolocator.getCountryByIp(ip).orElse(FALLBACK_COUNTRY);
+      visitEntity.setCountry(country);
+    } else {
+      visitEntity.setCountry(FALLBACK_COUNTRY);
+    }
+    visitEntity.setReferralWebsite(visit.getReferralWebsite());
     visitRepository.save(visitEntity);
   }
 }
