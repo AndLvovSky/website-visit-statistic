@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import java.time.Clock;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 import lombok.RequiredArgsConstructor;
 
@@ -36,7 +35,7 @@ public class DefaultDateTimeService implements DateTimeService {
   @Override
   public DateTimeInterval getInterval(String fromDate, String toDate) {
     LocalDateTime fromDateTime = DateUtils.mapToDate(fromDate).atStartOfDay();
-    LocalDateTime toDateTime = DateUtils.mapToDate(toDate).atTime(LocalTime.MAX);
+    LocalDateTime toDateTime = DateUtils.mapToDate(toDate).plusDays(1).atStartOfDay();
     return new DateTimeInterval(fromDateTime, toDateTime);
   }
 }

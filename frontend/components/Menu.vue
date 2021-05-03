@@ -27,6 +27,9 @@
       <b-nav-item :to="`/statistics/route-statistics${getSiteSuffix()}`" exact-active-class="active">
         Pages
       </b-nav-item>
+      <b-nav-item :to="`/statistics/summary${getSiteSuffix()}`" exact-active-class="active">
+        Summary
+      </b-nav-item>
       <b-nav-dropdown v-show="this.$route.query.siteId" text="Country">
         <b-dropdown-item :to="`/statistics/country${getSiteSuffix()}`" exact-active-class="active">
           Chart

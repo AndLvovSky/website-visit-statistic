@@ -45,7 +45,7 @@ import { mapActions, mapState } from 'vuex'
 import DoughnutChart from '../../components/chart/DoughnutChart'
 
 export default {
-  name: 'Device',
+  name: 'Ab',
   components: {
     DoughnutChart
   },

@@ -5,7 +5,8 @@ export default {
     countryVisits: [],
     referralWebsites: [],
     websiteVersions: [],
-    routeVisits: []
+    routeVisits: [],
+    visitSummary: {}
   },
   mutations: {
     setTimeVisits: (state, timeVisits) => (state.timeVisits = timeVisits),
@@ -13,7 +14,8 @@ export default {
     setCountryVisits: (state, countryVisits) => (state.countryVisits = countryVisits),
     setReferralWebsites: (state, referralWebsites) => (state.referralWebsites = referralWebsites),
     setWebsiteVersions: (state, websiteVersions) => (state.websiteVersions = websiteVersions),
-    setRouteVisits: (state, routeVisits) => (state.routeVisits = routeVisits)
+    setRouteVisits: (state, routeVisits) => (state.routeVisits = routeVisits),
+    setVisitSummary: (state, visitSummary) => (state.visitSummary = visitSummary)
   },
   actions: {
     async loadVisitsPerDayOfWeek ({ commit }, { siteId }) {
@@ -159,6 +161,18 @@ export default {
         value: item.visits
       }))
       commit('setRouteVisits', routeVisits)
+    },
+    async loadVisitSummaryForTheLastWeek ({ commit }, { siteId }) {
+      const data = await this.$axios.$get(`/statistics/summary/visits/week/${siteId}`)
+      commit('setVisitSummary', data)
+    },
+    async loadVisitSummaryForTheLastMonth ({ commit }, { siteId }) {
+      const data = await this.$axios.$get(`/statistics/summary/visits/month/${siteId}`)
+      commit('setVisitSummary', data)
+    },
+    async loadVisitSummary ({ commit }, { siteId, fromDate, toDate }) {
+      const data = await this.$axios.$get(`/statistics/summary/visits/custom/${siteId}?fromDate=${fromDate}&toDate=${toDate}`)
+      commit('setVisitSummary', data)
     }
   }
 }
