@@ -4,14 +4,16 @@ export default {
     deviceVisits: [],
     countryVisits: [],
     referralWebsites: [],
-    websiteVersions: []
+    websiteVersions: [],
+    routeVisits: []
   },
   mutations: {
     setTimeVisits: (state, timeVisits) => (state.timeVisits = timeVisits),
     setDeviceVisits: (state, deviceVisits) => (state.deviceVisits = deviceVisits),
     setCountryVisits: (state, countryVisits) => (state.countryVisits = countryVisits),
     setReferralWebsites: (state, referralWebsites) => (state.referralWebsites = referralWebsites),
-    setWebsiteVersions: (state, websiteVersions) => (state.websiteVersions = websiteVersions)
+    setWebsiteVersions: (state, websiteVersions) => (state.websiteVersions = websiteVersions),
+    setRouteVisits: (state, routeVisits) => (state.routeVisits = routeVisits)
   },
   actions: {
     async loadVisitsPerDayOfWeek ({ commit }, { siteId }) {
@@ -101,6 +103,22 @@ export default {
         value: item.visits
       }))
       commit('setWebsiteVersions', websiteVersions)
+    },
+    async loadRouteVisitsForTheLastWeek ({ commit }, { siteId }) {
+      const data = await this.$axios.$get(`/statistics/route/visits/week/${siteId}`)
+      const routeVisits = data.map(item => ({
+        label: item.path,
+        value: item.visits
+      }))
+      commit('setRouteVisits', routeVisits)
+    },
+    async loadRouteVisitsForTheLastMonth ({ commit }, { siteId }) {
+      const data = await this.$axios.$get(`/statistics/route/visits/month/${siteId}`)
+      const routeVisits = data.map(item => ({
+        label: item.path,
+        value: item.visits
+      }))
+      commit('setRouteVisits', routeVisits)
     }
   }
 }

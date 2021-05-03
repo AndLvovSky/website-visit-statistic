@@ -19,4 +19,5 @@ public class VisitDto {
   private String userAgent;
   private String referralWebsite;
   private String websiteVersion;
+  private String path;
 }

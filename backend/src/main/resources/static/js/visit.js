@@ -6,7 +6,8 @@ function visit(apiKey, websiteVersion) {
             time: new Date().toLocaleString(),
             userAgent: navigator.userAgent,
             referralWebsite: new URL(document.location).searchParams.get("referral"),
-            websiteVersion
+            websiteVersion,
+            path: document.location.pathname
         }),
         crossDomain: true,
         contentType: "application/json"

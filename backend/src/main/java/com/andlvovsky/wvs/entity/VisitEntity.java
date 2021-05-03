@@ -69,4 +69,7 @@ public class VisitEntity {
 
   @Column(name = "website_version")
   private String websiteVersion;
+
+  @Column(name = "path")
+  private String path;
 }

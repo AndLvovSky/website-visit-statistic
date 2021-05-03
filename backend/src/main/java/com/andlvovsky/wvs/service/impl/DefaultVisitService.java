@@ -46,6 +46,7 @@ public class DefaultVisitService implements VisitService {
     }
     visitEntity.setReferralWebsite(visit.getReferralWebsite());
     visitEntity.setWebsiteVersion(visit.getWebsiteVersion());
+    visitEntity.setPath(visit.getPath());
     visitRepository.save(visitEntity);
   }
 }
