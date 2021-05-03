@@ -39,6 +39,11 @@
         Documentation
       </b-nav-item>
     </b-navbar-nav>
+    <b-navbar-nav class="ml-auto">
+      <b-button v-if="!$route.name.startsWith('login') && !$route.name.startsWith('sign-up')" variant="link" @click="logout">
+        Logout
+      </b-button>
+    </b-navbar-nav>
   </b-navbar>
 </template>
 
@@ -48,6 +53,14 @@ export default {
   methods: {
     getSiteSuffix () {
       return this.$route.query.siteId ? `?siteId=${this.$route.query.siteId}` : ''
+    },
+    logout () {
+      this.$axios.post('/logout', { }, {
+        auth: {
+          username: this.username,
+          password: this.password
+        }
+      }).then(() => (this.$router.push('/')))
     }
   }
 }

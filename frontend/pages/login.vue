@@ -14,6 +14,13 @@
         Login
       </b-button>
     </b-form>
+    <b-button
+      class="float-right"
+      variant="success"
+      @click="$router.push('/sign-up')"
+    >
+      Sign up
+    </b-button>
   </div>
 </template>
 

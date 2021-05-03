@@ -5,6 +5,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class Endpoint {
   public static final String LOGIN = "/login";
+  public static final String USERS = "/users";
   public static final String SITES = "/sites";
   public static final String VISIT = "/visit";
   public static final String STATISTICS = "/statistics";
