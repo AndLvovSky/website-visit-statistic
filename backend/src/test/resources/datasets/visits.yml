@@ -1,0 +1,55 @@
+users:
+  - id: 1001
+    username: 'john_doe'
+    full_name: 'John Doe'
+    password: '$2y$12$O/E7inTqFfH/ofdqcE72a.lYFmYLw8GAIURCxMOBQQ5oIMF02E7Py'
+    email: 'john.doe@gmail.com'
+
+site:
+  - id: 1001
+    user_id: 1001
+    name: 'Google'
+    created_on: '2020-01-01 00:00:00'
+    link: 'https://google.com'
+
+visit:
+  - id: 1001
+    site_id: 1001
+    time: '2021-04-22 11:00:00'
+    country: 'US'
+    device: 'PC'
+    ip: '95.202.130.78'
+    actual_time: '2021-04-22 09:00:00'
+    referral_website: 'twitter.com'
+    website_version: 'v2'
+    path: '/'
+  - id: 1002
+    site_id: 1001
+    time: '2021-04-06 17:00:00'
+    country: 'CN'
+    device: 'PC'
+    ip: '93.202.130.69'
+    actual_time: '2021-04-06 15:00:00'
+    referral_website: 'facebook.com'
+    website_version: 'v1'
+    path: '/order'
+  - id: 1003
+    site_id: 1001
+    time: '2021-04-15 19:00:00'
+    country: 'US'
+    device: 'MOBILE'
+    ip: '91.202.130.78'
+    actual_time: '2021-04-15 17:00:00'
+    referral_website: 'twitter.com'
+    website_version: 'v2'
+    path: '/'
+  - id: 1004
+    site_id: 1001
+    time: '2021-04-27 06:00:00'
+    country: 'US'
+    device: 'PC'
+    ip: '97.202.130.78'
+    actual_time: '2021-04-27 04:00:00'
+    referral_website: 'twitter.com'
+    website_version: 'v2'
+    path: '/user/profile'
