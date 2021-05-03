@@ -2,10 +2,14 @@
   <div class="container">
     <div class="h3 text-center">
       A/B statistics
+      <b-button
+        v-b-tooltip.hover
+        title="Find which version of the website is more popular"
+        variant="light"
+      >
+        <b-icon icon="info-circle"></b-icon>
+      </b-button>
     </div>
-    <p>
-      Find which version of the website is more popular
-    </p>
     <div class="d-flex">
       <b-form-select v-model="duration" class="duration-select" @change="loadVisits">
         <b-form-select-option value="week">

@@ -2,10 +2,14 @@
   <div class="container">
     <div class="h3 text-center">
       Referral websites
+      <b-button
+        v-b-tooltip.hover
+        title="Find which website generate most traffic to yours"
+        variant="light"
+      >
+        <b-icon icon="info-circle"></b-icon>
+      </b-button>
     </div>
-    <p>
-      Find which website generate most traffic to your website
-    </p>
     <div class="d-flex">
       <b-form-select v-model="duration" class="duration-select" @change="loadVisits">
         <b-form-select-option value="week">

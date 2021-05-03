@@ -1,5 +1,5 @@
 <template>
-  <b-jumbotron class="mb-0">
+  <b-jumbotron class="mb-0 custom-header">
     <template #header>
       Website Visit Statistics Console
     </template>
@@ -13,5 +13,8 @@ export default {
 </script>
 
 <style scoped>
-
+.custom-header {
+  background-color: azure;
+  font-family: 'Work Sans', sans-serif;
+}
 </style>

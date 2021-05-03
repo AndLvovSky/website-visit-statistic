@@ -5,7 +5,7 @@ export default {
   ** Headers of the page
   */
   head: {
-    title: process.env.npm_package_name || '',
+    title: 'WVS',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -13,7 +13,8 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'stylesheet', href: '//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/default.min.css' }
+      { rel: 'stylesheet', href: '//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/default.min.css' },
+      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@1,300&display=swap' }
     ]
   },
   /*
@@ -31,7 +32,8 @@ export default {
   */
   plugins: [
     '~/plugins/axios',
-    '~/plugins/vue-highlight-js'
+    '~/plugins/vue-highlight-js',
+    '~/plugins/bootstrap-icons.js'
   ],
   /*
   ** Nuxt.js dev-modules

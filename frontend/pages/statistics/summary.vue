@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="h3 text-center">
-      Visits summary
+      Visits summary per day
     </div>
     <div class="d-flex">
       <b-button type="submit" variant="info" @click="exportSummary">

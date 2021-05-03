@@ -2,10 +2,14 @@
   <div class="container">
     <div class="h3 text-center">
       Page statistics
+      <b-button
+        v-b-tooltip.hover
+        title="Shows which pages are more popular than others"
+        variant="light"
+      >
+        <b-icon icon="info-circle"></b-icon>
+      </b-button>
     </div>
-    <p>
-      Shows which pages are more popular than others
-    </p>
     <div class="d-flex">
       <b-form-select v-model="duration" class="duration-select" @change="loadVisits">
         <b-form-select-option value="week">
