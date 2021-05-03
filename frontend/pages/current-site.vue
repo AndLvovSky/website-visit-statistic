@@ -54,6 +54,9 @@
         Cancel
       </b-button>
     </div>
+    <div class="h4">
+      Copy these lines into header of your website:
+    </div>
     <IntegrationCode :api-key="site.apiKey" class="mt-2" />
     <b-button
       v-b-modal.delete-confirmation

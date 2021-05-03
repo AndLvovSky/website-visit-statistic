@@ -1,8 +1,5 @@
 <template>
   <div>
-    <div class="h4">
-      Copy these lines into header of your website:
-    </div>
     <pre v-highlightjs="code">
       <code class="html" />
     </pre>

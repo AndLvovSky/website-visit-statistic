@@ -29,6 +29,9 @@
           Map
         </b-dropdown-item>
       </b-nav-dropdown>
+      <b-nav-item :to="`/documentation${getSiteSuffix()}`" exact-active-class="active">
+        Documentation
+      </b-nav-item>
     </b-navbar-nav>
   </b-navbar>
 </template>
