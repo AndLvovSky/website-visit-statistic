@@ -4,6 +4,9 @@
       Visits summary
     </div>
     <div class="d-flex">
+      <b-button type="submit" variant="info" @click="exportSummary">
+        Export
+      </b-button>
       <b-form-select v-model="duration" class="duration-select" @change="loadSummary">
         <b-form-select-option value="week">
           Week
@@ -75,7 +78,8 @@ export default {
     this.loadSummary()
   },
   methods: {
-    ...mapActions('statistics', ['loadVisitSummaryForTheLastWeek', 'loadVisitSummaryForTheLastMonth', 'loadVisitSummary']),
+    ...mapActions('statistics', ['loadVisitSummaryForTheLastWeek', 'loadVisitSummaryForTheLastMonth', 'loadVisitSummary',
+      'exportVisitSummaryForTheLastWeek', 'exportVisitSummaryForTheLastMonth', 'exportVisitSummary']),
     loadSummary () {
       const params = {
         siteId: this.$route.query.siteId,
@@ -91,6 +95,23 @@ export default {
           return
         }
         this.loadVisitSummary(params)
+      }
+    },
+    exportSummary () {
+      const params = {
+        siteId: this.$route.query.siteId,
+        fromDate: this.fromDate,
+        toDate: this.toDate
+      }
+      if (this.duration === 'week') {
+        this.exportVisitSummaryForTheLastWeek(params)
+      } else if (this.duration === 'month') {
+        this.exportVisitSummaryForTheLastMonth(params)
+      } else {
+        if (this.fromDate == null || this.toDate == null) {
+          return
+        }
+        this.exportVisitSummary(params)
       }
     }
   }

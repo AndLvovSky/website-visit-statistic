@@ -7,9 +7,16 @@ import com.andlvovsky.wvs.service.VisitServiceLocal;
 import com.andlvovsky.wvs.service.statistics.DateTimeService;
 import com.andlvovsky.wvs.service.statistics.VisitSummaryService;
 
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
@@ -49,6 +56,84 @@ public class DefaultVisitSummaryService implements VisitSummaryService {
     DateTimeInterval interval = dateTimeService.getInterval(fromDate, toDate);
     List<VisitEntity> visits = visitServiceLocal.getVisits(siteId, interval);
     return getVisitSummary(visits, interval);
+  }
+
+  @Override
+  public File exportVisitSummaryForTheLastWeekToExcel(Long siteId) {
+    VisitSummaryDto visitSummary = getVisitSummaryForTheLastWeek(siteId);
+    return toExcel(visitSummary);
+  }
+
+  @Override
+  public File exportVisitSummaryForTheLastMonthToExcel(Long siteId) {
+    VisitSummaryDto visitSummary = getVisitSummaryForTheLastMonth(siteId);
+    return toExcel(visitSummary);
+  }
+
+  @Override
+  public File exportVisitSummaryToExcel(Long siteId, String fromDate, String toDate) {
+    VisitSummaryDto visitSummary = getVisitSummary(siteId, fromDate, toDate);
+    return toExcel(visitSummary);
+  }
+
+  private File toExcel(VisitSummaryDto visitSummary) {
+    try (Workbook workbook = WorkbookFactory.create(true)) {
+      writeContent(workbook, visitSummary);
+      return toFile(workbook);
+    } catch (IOException e) {
+      throw new RuntimeException("Can not write visit summary workbook to temp file", e);
+    }
+  }
+
+  private void writeContent(Workbook workbook, VisitSummaryDto visitSummary) {
+    Sheet sheet = workbook.createSheet();
+    Row row = sheet.createRow(0);
+    row.createCell(0).setCellValue("Name");
+    row.createCell(1).setCellValue("Value");
+
+    row = sheet.createRow(1);
+    row.createCell(0).setCellValue("Average Visits");
+    row.createCell(1).setCellValue(visitSummary.getAverageVisits());
+
+    row = sheet.createRow(2);
+    row.createCell(0).setCellValue("Average Unique Visits");
+    row.createCell(1).setCellValue(visitSummary.getAverageUniqueVisits());
+
+    row = sheet.createRow(3);
+    row.createCell(0).setCellValue("Minimum Visits");
+    row.createCell(1).setCellValue(visitSummary.getMinVisits());
+
+    row = sheet.createRow(4);
+    row.createCell(0).setCellValue("Minimum Unique Visits");
+    row.createCell(1).setCellValue(visitSummary.getMinUniqueVisits());
+
+    row = sheet.createRow(5);
+    row.createCell(0).setCellValue("Maximum Visits");
+    row.createCell(1).setCellValue(visitSummary.getMaxVisits());
+
+    row = sheet.createRow(6);
+    row.createCell(0).setCellValue("Maximum Unique Visits");
+    row.createCell(1).setCellValue(visitSummary.getMaxUniqueVisits());
+
+    row = sheet.createRow(7);
+    row.createCell(0).setCellValue("Visits Standard Deviation");
+    row.createCell(1).setCellValue(visitSummary.getVisitsStandardDeviation());
+
+    row = sheet.createRow(8);
+    row.createCell(0).setCellValue("Unique Visits Standard Deviation");
+    row.createCell(1).setCellValue(visitSummary.getUniqueVisitsStandardDeviation());
+  }
+
+  private File toFile(Workbook workbook) {
+    try {
+      File tempFile = File.createTempFile("temp", ".xlsx");
+      try (FileOutputStream fileOut = new FileOutputStream(tempFile)) {
+        workbook.write(fileOut);
+        return tempFile;
+      }
+    } catch (IOException e) {
+      throw new RuntimeException(e.getMessage(), e);
+    }
   }
 
   private VisitSummaryDto getVisitSummary(List<VisitEntity> visits, DateTimeInterval interval) {

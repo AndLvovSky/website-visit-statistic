@@ -1,3 +1,5 @@
+import downloadBlob from '~/utils/downloadBlob'
+
 export default {
   state: {
     timeVisits: [],
@@ -173,6 +175,21 @@ export default {
     async loadVisitSummary ({ commit }, { siteId, fromDate, toDate }) {
       const data = await this.$axios.$get(`/statistics/summary/visits/custom/${siteId}?fromDate=${fromDate}&toDate=${toDate}`)
       commit('setVisitSummary', data)
+    },
+    exportVisitSummaryForTheLastWeek ({ commit }, { siteId }) {
+      const url = `/statistics/summary/visits/week/${siteId}/export`
+      const fileName = 'visit_summary.xlsx'
+      downloadBlob(this.$axios, url, fileName)
+    },
+    exportVisitSummaryForTheLastMonth ({ commit }, { siteId }) {
+      const url = `/statistics/summary/visits/month/${siteId}/export`
+      const fileName = 'visit_summary.xlsx'
+      downloadBlob(this.$axios, url, fileName)
+    },
+    exportVisitSummary ({ commit }, { siteId, fromDate, toDate }) {
+      const url = `/statistics/summary/visits/custom/${siteId}/export?fromDate=${fromDate}&toDate=${toDate}`
+      const fileName = 'visit_summary.xlsx'
+      downloadBlob(this.$axios, url, fileName)
     }
   }
 }
