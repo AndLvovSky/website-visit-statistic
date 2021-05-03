@@ -53,8 +53,11 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .custom-navbar {
   background: #64a8b8;
+}
+.dropdown-menu {
+  z-index: 1050
 }
 </style>

@@ -80,6 +80,14 @@ export default {
       }))
       commit('setCountryVisits', countryVisits)
     },
+    async loadCountryVisits ({ commit }, { siteId, fromDate, toDate }) {
+      const data = await this.$axios.$get(`/statistics/country/visits/custom/${siteId}?fromDate=${fromDate}&toDate=${toDate}`)
+      const countryVisits = data.map(item => ({
+        label: item.country,
+        value: item.visits
+      }))
+      commit('setCountryVisits', countryVisits)
+    },
     async loadReferralWebsitesForTheLastWeek ({ commit }, { siteId }) {
       const data = await this.$axios.$get(`/statistics/referral-websites/visits/week/${siteId}`)
       const referralWebsites = data.map(item => ({
@@ -90,6 +98,14 @@ export default {
     },
     async loadReferralWebsitesForTheLastMonth ({ commit }, { siteId }) {
       const data = await this.$axios.$get(`/statistics/referral-websites/visits/month/${siteId}`)
+      const referralWebsites = data.map(item => ({
+        label: item.website,
+        value: item.visits
+      }))
+      commit('setReferralWebsites', referralWebsites)
+    },
+    async loadReferralWebsites ({ commit }, { siteId, fromDate, toDate }) {
+      const data = await this.$axios.$get(`/statistics/referral-websites/visits/month/${siteId}?fromDate=${fromDate}&toDate=${toDate}`)
       const referralWebsites = data.map(item => ({
         label: item.website,
         value: item.visits
@@ -112,6 +128,14 @@ export default {
       }))
       commit('setWebsiteVersions', websiteVersions)
     },
+    async loadWebsiteVersions ({ commit }, { siteId, fromDate, toDate }) {
+      const data = await this.$axios.$get(`/statistics/a-b/visits/custom/${siteId}?fromDate=${fromDate}&toDate=${toDate}`)
+      const websiteVersions = data.map(item => ({
+        label: item.version,
+        value: item.visits
+      }))
+      commit('setWebsiteVersions', websiteVersions)
+    },
     async loadRouteVisitsForTheLastWeek ({ commit }, { siteId }) {
       const data = await this.$axios.$get(`/statistics/route/visits/week/${siteId}`)
       const routeVisits = data.map(item => ({
@@ -122,6 +146,14 @@ export default {
     },
     async loadRouteVisitsForTheLastMonth ({ commit }, { siteId }) {
       const data = await this.$axios.$get(`/statistics/route/visits/month/${siteId}`)
+      const routeVisits = data.map(item => ({
+        label: item.path,
+        value: item.visits
+      }))
+      commit('setRouteVisits', routeVisits)
+    },
+    async loadRouteVisits ({ commit }, { siteId, fromDate, toDate }) {
+      const data = await this.$axios.$get(`/statistics/route/visits/custom/${siteId}?fromDate=${fromDate}&toDate=${toDate}`)
       const routeVisits = data.map(item => ({
         label: item.path,
         value: item.visits

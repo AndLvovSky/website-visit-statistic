@@ -20,13 +20,13 @@
       <b-form-datepicker
         v-model="fromDate"
         class="mt-2"
-        placeholder="fromDate"
+        placeholder="From"
         @input="loadVisits"
       />
       <b-form-datepicker
         v-model="toDate"
         class="mt-2 mb-4"
-        placeholder="toDate"
+        placeholder="To"
         @input="loadVisits"
       />
     </div>

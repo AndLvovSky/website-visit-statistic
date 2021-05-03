@@ -7,6 +7,7 @@ import com.andlvovsky.wvs.service.statistics.RouteStatisticsService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -28,5 +29,14 @@ public class RouteStatisticsController {
   @GetMapping("/visits/month/{siteId}")
   public List<RouteVisitsDto> getRouteVisitsForTheLastMonth(@PathVariable Long siteId) {
     return routeStatisticsService.getRouteVisitsForTheLastMonth(siteId);
+  }
+
+  @GetMapping("/visits/custom/{siteId}")
+  public List<RouteVisitsDto> getRouteVisits(
+      @PathVariable Long siteId,
+      @RequestParam String fromDate,
+      @RequestParam String toDate
+  ) {
+    return routeStatisticsService.getRouteVisits(siteId, fromDate, toDate);
   }
 }

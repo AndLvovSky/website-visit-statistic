@@ -8,4 +8,6 @@ public interface CountryStatisticsService {
   List<CountryVisitsDto> getVisitsPerCountryForTheLastWeek(Long siteId);
 
   List<CountryVisitsDto> getVisitsPerCountryForTheLastMonth(Long siteId);
+
+  List<CountryVisitsDto> getVisitsPerCountry(Long siteId, String fromDate, String toDate);
 }

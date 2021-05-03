@@ -7,6 +7,7 @@ import com.andlvovsky.wvs.service.statistics.ReferralStatisticsService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -28,5 +29,14 @@ public class ReferralStatisticsController {
   @GetMapping("/visits/month/{siteId}")
   public List<ReferralWebsiteDto> getReferralWebsitesForTheLastMonth(@PathVariable Long siteId) {
     return referralStatisticsService.getReferralWebsitesForTheLastMonth(siteId);
+  }
+
+  @GetMapping("/visits/custom/{siteId}")
+  public List<ReferralWebsiteDto> getReferralWebsites(
+      @PathVariable Long siteId,
+      @RequestParam String fromDate,
+      @RequestParam String toDate
+  ) {
+    return referralStatisticsService.getReferralWebsites(siteId, fromDate, toDate);
   }
 }

@@ -41,6 +41,13 @@ public class DefaultCountryStatisticsService implements CountryStatisticsService
     return getCountryVisits(visitsForTheLastMonth);
   }
 
+  @Override
+  public List<CountryVisitsDto> getVisitsPerCountry(Long siteId, String fromDate, String toDate) {
+    DateTimeInterval interval = dateTimeService.getInterval(fromDate, toDate);
+    List<VisitEntity> visits = visitServiceLocal.getVisits(siteId, interval);
+    return getCountryVisits(visits);
+  }
+
   private List<CountryVisitsDto> getCountryVisits(List<VisitEntity> visits) {
     return visits.stream()
         .collect(groupingBy(VisitEntity::getCountry, counting()))

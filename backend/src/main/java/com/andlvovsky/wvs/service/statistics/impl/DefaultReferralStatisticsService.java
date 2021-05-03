@@ -41,6 +41,13 @@ public class DefaultReferralStatisticsService implements ReferralStatisticsServi
     return getReferralWebsites(visitsForTheLastMonth);
   }
 
+  @Override
+  public List<ReferralWebsiteDto> getReferralWebsites(Long siteId, String fromDate, String toDate) {
+    DateTimeInterval interval = dateTimeService.getInterval(fromDate, toDate);
+    List<VisitEntity> visits = visitServiceLocal.getVisits(siteId, interval);
+    return getReferralWebsites(visits);
+  }
+
   private List<ReferralWebsiteDto> getReferralWebsites(List<VisitEntity> visits) {
     return visits.stream()
         .filter(visit -> visit.getReferralWebsite() != null)

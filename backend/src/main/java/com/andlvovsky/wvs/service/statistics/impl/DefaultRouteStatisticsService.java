@@ -43,6 +43,13 @@ public class DefaultRouteStatisticsService implements RouteStatisticsService {
     return getRouteVisits(visitsForTheLastMonth);
   }
 
+  @Override
+  public List<RouteVisitsDto> getRouteVisits(Long siteId, String fromDate, String toDate) {
+    DateTimeInterval interval = dateTimeService.getInterval(fromDate, toDate);
+    List<VisitEntity> visits = visitServiceLocal.getVisits(siteId, interval);
+    return getRouteVisits(visits);
+  }
+
   private List<RouteVisitsDto> getRouteVisits(List<VisitEntity> visits) {
     return visits.stream()
         .map(visit -> visit.getPath() == null ? DEFAULT_PATH : visit.getPath())

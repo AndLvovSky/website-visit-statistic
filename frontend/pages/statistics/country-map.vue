@@ -11,7 +11,24 @@
         <b-form-select-option value="month">
           Month
         </b-form-select-option>
+        <b-form-select-option value="custom">
+          Custom
+        </b-form-select-option>
       </b-form-select>
+    </div>
+    <div v-if="duration === 'custom'">
+      <b-form-datepicker
+        v-model="fromDate"
+        class="mt-2"
+        placeholder="From"
+        @input="loadVisits"
+      />
+      <b-form-datepicker
+        v-model="toDate"
+        class="mt-2 mb-4"
+        placeholder="To"
+        @input="loadVisits"
+      />
     </div>
     <MapChart v-if="dataExists" :country-data="countryVisitsMap" />
     <b-alert v-else show variant="warning" class="mt-4">
@@ -30,7 +47,9 @@ export default {
   },
   data () {
     return {
-      duration: 'week'
+      duration: 'week',
+      fromDate: null,
+      toDate: null
     }
   },
   computed: {
@@ -50,15 +69,22 @@ export default {
     this.loadVisits()
   },
   methods: {
-    ...mapActions('statistics', ['loadCountryVisitsForTheLastWeek', 'loadCountryVisitsForTheLastMonth']),
+    ...mapActions('statistics', ['loadCountryVisitsForTheLastWeek', 'loadCountryVisitsForTheLastMonth', 'loadCountryVisits']),
     loadVisits () {
       const params = {
-        siteId: this.$route.query.siteId
+        siteId: this.$route.query.siteId,
+        fromDate: this.fromDate,
+        toDate: this.toDate
       }
       if (this.duration === 'week') {
         this.loadCountryVisitsForTheLastWeek(params)
-      } else {
+      } else if (this.duration === 'month') {
         this.loadCountryVisitsForTheLastMonth(params)
+      } else {
+        if (this.fromDate == null || this.toDate == null) {
+          return
+        }
+        this.loadCountryVisits(params)
       }
     }
   }

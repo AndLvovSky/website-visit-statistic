@@ -8,4 +8,6 @@ public interface RouteStatisticsService {
   List<RouteVisitsDto> getRouteVisitsForTheLastWeek(Long siteId);
 
   List<RouteVisitsDto> getRouteVisitsForTheLastMonth(Long siteId);
+
+  List<RouteVisitsDto> getRouteVisits(Long siteId, String fromDate, String toDate);
 }

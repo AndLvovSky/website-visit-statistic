@@ -7,6 +7,7 @@ import com.andlvovsky.wvs.service.statistics.CountryStatisticsService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -28,5 +29,14 @@ public class CountryStatisticsController {
   @GetMapping("/visits/month/{siteId}")
   public List<CountryVisitsDto> getVisitsPerCountryForTheLastMonth(@PathVariable Long siteId) {
     return countryStatisticsService.getVisitsPerCountryForTheLastMonth(siteId);
+  }
+
+  @GetMapping("/visits/custom/{siteId}")
+  public List<CountryVisitsDto> getVisitsPerCountry(
+      @PathVariable Long siteId,
+      @RequestParam String fromDate,
+      @RequestParam String toDate
+  ) {
+    return countryStatisticsService.getVisitsPerCountry(siteId, fromDate, toDate);
   }
 }

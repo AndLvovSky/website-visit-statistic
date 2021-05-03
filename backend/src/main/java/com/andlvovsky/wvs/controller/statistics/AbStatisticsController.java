@@ -7,6 +7,7 @@ import com.andlvovsky.wvs.service.statistics.AbStatisticsService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -28,5 +29,14 @@ public class AbStatisticsController {
   @GetMapping("/visits/month/{siteId}")
   public List<AbVisitsDto> getVisitsPerWebsiteVersionForTheLastMonth(@PathVariable Long siteId) {
     return abStatisticsService.getVisitsPerWebsiteVersionForTheLastMonth(siteId);
+  }
+
+  @GetMapping("/visits/custom/{siteId}")
+  public List<AbVisitsDto> getVisitsPerWebsiteVersion(
+      @PathVariable Long siteId,
+      @RequestParam String fromDate,
+      @RequestParam String toDate
+  ) {
+    return abStatisticsService.getVisitsPerWebsiteVersion(siteId, fromDate, toDate);
   }
 }

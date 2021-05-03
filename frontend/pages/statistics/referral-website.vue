@@ -14,7 +14,24 @@
         <b-form-select-option value="month">
           Month
         </b-form-select-option>
+        <b-form-select-option value="custom">
+          Custom
+        </b-form-select-option>
       </b-form-select>
+    </div>
+    <div v-if="duration === 'custom'">
+      <b-form-datepicker
+        v-model="fromDate"
+        class="mt-2"
+        placeholder="From"
+        @input="loadVisits"
+      />
+      <b-form-datepicker
+        v-model="toDate"
+        class="mt-2 mb-4"
+        placeholder="To"
+        @input="loadVisits"
+      />
     </div>
     <b-alert v-if="!dataExists" show variant="warning" class="mt-4">
       There is no data yet
@@ -34,7 +51,9 @@ export default {
   },
   data () {
     return {
-      duration: 'week'
+      duration: 'week',
+      fromDate: null,
+      toDate: null
     }
   },
   computed: {
@@ -47,15 +66,22 @@ export default {
     this.loadVisits()
   },
   methods: {
-    ...mapActions('statistics', ['loadReferralWebsitesForTheLastWeek', 'loadReferralWebsitesForTheLastMonth']),
+    ...mapActions('statistics', ['loadReferralWebsitesForTheLastWeek', 'loadReferralWebsitesForTheLastMonth', 'loadReferralWebsites']),
     loadVisits () {
       const params = {
-        siteId: this.$route.query.siteId
+        siteId: this.$route.query.siteId,
+        fromDate: this.fromDate,
+        toDate: this.toDate
       }
       if (this.duration === 'week') {
         this.loadReferralWebsitesForTheLastWeek(params)
-      } else {
+      } else if (this.duration === 'month') {
         this.loadReferralWebsitesForTheLastMonth(params)
+      } else {
+        if (this.fromDate == null || this.toDate == null) {
+          return
+        }
+        this.loadReferralWebsites(params)
       }
     }
   }

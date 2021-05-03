@@ -41,6 +41,13 @@ public class DefaultAbStatisticsService implements AbStatisticsService {
     return getVisitsPerWebsiteVersion(visitsForTheLastMonth);
   }
 
+  @Override
+  public List<AbVisitsDto> getVisitsPerWebsiteVersion(Long siteId, String fromDate, String toDate) {
+    DateTimeInterval interval = dateTimeService.getInterval(fromDate, toDate);
+    List<VisitEntity> visits = visitServiceLocal.getVisits(siteId, interval);
+    return getVisitsPerWebsiteVersion(visits);
+  }
+
   private List<AbVisitsDto> getVisitsPerWebsiteVersion(List<VisitEntity> visits) {
     return visits.stream()
         .filter(visit -> visit.getWebsiteVersion() != null)
