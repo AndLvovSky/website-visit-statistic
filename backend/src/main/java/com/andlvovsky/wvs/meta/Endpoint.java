@@ -12,4 +12,5 @@ public class Endpoint {
   public static final String DEVICE_STATISTICS = STATISTICS + "/device";
   public static final String COUNTRY_STATISTICS = STATISTICS + "/country";
   public static final String REFERRAL_STATISTICS = STATISTICS + "/referral-websites";
+  public static final String AB_STATISTICS = STATISTICS + "/a-b";
 }

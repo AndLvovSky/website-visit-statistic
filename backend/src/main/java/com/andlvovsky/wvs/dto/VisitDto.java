@@ -18,4 +18,5 @@ public class VisitDto {
   @NotNull
   private String userAgent;
   private String referralWebsite;
+  private String websiteVersion;
 }

@@ -21,6 +21,9 @@
       <b-nav-item :to="`/statistics/referral-website${getSiteSuffix()}`" exact-active-class="active">
         Referrals
       </b-nav-item>
+      <b-nav-item :to="`/statistics/ab-statistics${getSiteSuffix()}`" exact-active-class="active">
+        A/B
+      </b-nav-item>
       <b-nav-dropdown v-show="this.$route.query.siteId" text="Country">
         <b-dropdown-item :to="`/statistics/country${getSiteSuffix()}`" exact-active-class="active">
           Chart

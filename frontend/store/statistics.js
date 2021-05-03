@@ -3,13 +3,15 @@ export default {
     timeVisits: [],
     deviceVisits: [],
     countryVisits: [],
-    referralWebsites: []
+    referralWebsites: [],
+    websiteVersions: []
   },
   mutations: {
     setTimeVisits: (state, timeVisits) => (state.timeVisits = timeVisits),
     setDeviceVisits: (state, deviceVisits) => (state.deviceVisits = deviceVisits),
     setCountryVisits: (state, countryVisits) => (state.countryVisits = countryVisits),
-    setReferralWebsites: (state, referralWebsites) => (state.referralWebsites = referralWebsites)
+    setReferralWebsites: (state, referralWebsites) => (state.referralWebsites = referralWebsites),
+    setWebsiteVersions: (state, websiteVersions) => (state.websiteVersions = websiteVersions)
   },
   actions: {
     async loadVisitsPerDayOfWeek ({ commit }, { siteId }) {
@@ -83,6 +85,22 @@ export default {
         value: item.visits
       }))
       commit('setReferralWebsites', referralWebsites)
+    },
+    async loadWebsiteVersionsForTheLastWeek ({ commit }, { siteId }) {
+      const data = await this.$axios.$get(`/statistics/a-b/visits/week/${siteId}`)
+      const websiteVersions = data.map(item => ({
+        label: item.version,
+        value: item.visits
+      }))
+      commit('setWebsiteVersions', websiteVersions)
+    },
+    async loadWebsiteVersionsForTheLastMonth ({ commit }, { siteId }) {
+      const data = await this.$axios.$get(`/statistics/a-b/visits/month/${siteId}`)
+      const websiteVersions = data.map(item => ({
+        label: item.version,
+        value: item.visits
+      }))
+      commit('setWebsiteVersions', websiteVersions)
     }
   }
 }

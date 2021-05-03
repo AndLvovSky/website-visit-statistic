@@ -1,10 +1,10 @@
 <template>
   <div class="container">
     <div class="h3 text-center">
-      Referral websites
+      A/B statistics
     </div>
     <p>
-      Find which website generate most traffic to your website
+      Find which version of the website is more popular
     </p>
     <div class="d-flex">
       <b-form-select v-model="duration" class="duration-select" @change="loadVisits">
@@ -19,7 +19,7 @@
     <b-alert v-if="!dataExists" show variant="warning" class="mt-4">
       There is no data yet
     </b-alert>
-    <DoughnutChart :class="{'hidden' : !dataExists}" :data="referralWebsites" />
+    <DoughnutChart :class="{'hidden' : !dataExists}" :data="websiteVersions" />
   </div>
 </template>
 
@@ -38,24 +38,24 @@ export default {
     }
   },
   computed: {
-    ...mapState('statistics', ['referralWebsites']),
+    ...mapState('statistics', ['websiteVersions']),
     dataExists () {
-      return this.referralWebsites.length
+      return this.websiteVersions.length
     }
   },
   mounted () {
     this.loadVisits()
   },
   methods: {
-    ...mapActions('statistics', ['loadReferralWebsitesForTheLastWeek', 'loadReferralWebsitesForTheLastMonth']),
+    ...mapActions('statistics', ['loadWebsiteVersionsForTheLastWeek', 'loadWebsiteVersionsForTheLastMonth']),
     loadVisits () {
       const params = {
         siteId: this.$route.query.siteId
       }
       if (this.duration === 'week') {
-        this.loadReferralWebsitesForTheLastWeek(params)
+        this.loadWebsiteVersionsForTheLastWeek(params)
       } else {
-        this.loadReferralWebsitesForTheLastMonth(params)
+        this.loadWebsiteVersionsForTheLastMonth(params)
       }
     }
   }

@@ -66,4 +66,7 @@ public class VisitEntity {
 
   @Column(name = "referral_website")
   private String referralWebsite;
+
+  @Column(name = "website_version")
+  private String websiteVersion;
 }

@@ -45,6 +45,7 @@ public class DefaultVisitService implements VisitService {
       visitEntity.setCountry(FALLBACK_COUNTRY);
     }
     visitEntity.setReferralWebsite(visit.getReferralWebsite());
+    visitEntity.setWebsiteVersion(visit.getWebsiteVersion());
     visitRepository.save(visitEntity);
   }
 }
