@@ -16,4 +16,5 @@ public class VisitSummaryDto {
   private int maxUniqueVisits;
   private float visitsStandardDeviation;
   private float uniqueVisitsStandardDeviation;
+  private int activeUsers;
 }

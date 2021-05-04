@@ -92,34 +92,38 @@ public class DefaultVisitSummaryService implements VisitSummaryService {
     row.createCell(1).setCellValue("Value");
 
     row = sheet.createRow(1);
+    row.createCell(0).setCellValue("Total Active Users");
+    row.createCell(1).setCellValue(visitSummary.getActiveUsers());
+
+    row = sheet.createRow(2);
     row.createCell(0).setCellValue("Average Visits");
     row.createCell(1).setCellValue(visitSummary.getAverageVisits());
 
-    row = sheet.createRow(2);
+    row = sheet.createRow(3);
     row.createCell(0).setCellValue("Average Unique Visits");
     row.createCell(1).setCellValue(visitSummary.getAverageUniqueVisits());
 
-    row = sheet.createRow(3);
+    row = sheet.createRow(4);
     row.createCell(0).setCellValue("Minimum Visits");
     row.createCell(1).setCellValue(visitSummary.getMinVisits());
 
-    row = sheet.createRow(4);
+    row = sheet.createRow(5);
     row.createCell(0).setCellValue("Minimum Unique Visits");
     row.createCell(1).setCellValue(visitSummary.getMinUniqueVisits());
 
-    row = sheet.createRow(5);
+    row = sheet.createRow(6);
     row.createCell(0).setCellValue("Maximum Visits");
     row.createCell(1).setCellValue(visitSummary.getMaxVisits());
 
-    row = sheet.createRow(6);
+    row = sheet.createRow(7);
     row.createCell(0).setCellValue("Maximum Unique Visits");
     row.createCell(1).setCellValue(visitSummary.getMaxUniqueVisits());
 
-    row = sheet.createRow(7);
+    row = sheet.createRow(8);
     row.createCell(0).setCellValue("Visits Standard Deviation");
     row.createCell(1).setCellValue(visitSummary.getVisitsStandardDeviation());
 
-    row = sheet.createRow(8);
+    row = sheet.createRow(9);
     row.createCell(0).setCellValue("Unique Visits Standard Deviation");
     row.createCell(1).setCellValue(visitSummary.getUniqueVisitsStandardDeviation());
   }
@@ -183,6 +187,12 @@ public class DefaultVisitSummaryService implements VisitSummaryService {
 
     float uniqueVisitsStandardDeviation = round(getStandardDeviation(uniqueVisitCount, averageVisits));
     visitSummary.setUniqueVisitsStandardDeviation(uniqueVisitsStandardDeviation);
+
+    int activeUsers = (int) visits.stream()
+        .map(VisitEntity::getIp)
+        .distinct()
+        .count();
+    visitSummary.setActiveUsers(activeUsers);
 
     return visitSummary;
   }

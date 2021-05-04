@@ -63,6 +63,7 @@ export default {
         return []
       }
       return [
+        { name: 'Total Active Users', value: this.visitSummary.activeUsers },
         { name: 'Average Visits', value: this.visitSummary.averageVisits },
         { name: 'Average Unique Visits', value: this.visitSummary.averageUniqueVisits },
         { name: 'Minimum Visits', value: this.visitSummary.minVisits },

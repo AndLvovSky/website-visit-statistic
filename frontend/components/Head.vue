@@ -16,5 +16,7 @@ export default {
 .custom-header {
   background-color: azure;
   font-family: 'Work Sans', sans-serif;
+  padding-bottom: 2rem;
+  padding-top: 2rem;
 }
 </style>
