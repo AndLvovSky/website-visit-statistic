@@ -1,0 +1,29 @@
+version: 2.1
+
+jobs:
+  test_backend:
+    machine:
+      image: ubuntu-2004:202010-01
+    resource_class: medium
+    working_directory: ~/backend_repo
+
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - gradle-{{ checksum "backend/build.gradle" }}
+      - run:
+          name: "Run backend tests"
+          command: |
+            backend/gradlew clean test
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: gradle-{{ checksum "backend/build.gradle" }}
+
+workflows:
+  version: 2
+
+  backend:
+    jobs:
+      - test_backend
