@@ -49,7 +49,7 @@ export default {
     '@nuxtjs/axios',
   ],
   axios: {
-    baseURL: 'http://localhost:8787',
+    baseURL: process.env.NUXT_ENV_BACKEND_URL || 'http://localhost:8787',
     credentials: true
   },
   /*

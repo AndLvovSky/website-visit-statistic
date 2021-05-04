@@ -12,6 +12,6 @@ import lombok.RequiredArgsConstructor;
 public class TestController {
   @GetMapping
   public String test() {
-    return "v3";
+    return "v5";
   }
 }

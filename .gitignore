@@ -75,3 +75,9 @@ integration/integration.iml
 frontend/frontend.iml
 .idea/**
 spy.log
+
+# Terraform
+*.hcl
+.terraform
+
+modules.json
