@@ -1,0 +1,46 @@
+@startuml
+!define AWSPuml https://raw.githubusercontent.com/awslabs/aws-icons-for-plantuml/master/dist
+!includeurl AWSPuml/AWSCommon.puml
+!includeurl AWSPuml/AWSSimplified.puml
+!includeurl AWSPuml/General/Users.puml
+!includeurl AWSPuml/Compute/all.puml
+!includeurl AWSPuml/Storage/all.puml
+!includeurl AWSPuml/Analytics/all.puml
+!includeurl AWSPuml/NetworkingAndContentDelivery/all.puml
+!includeurl AWSPuml/ManagementAndGovernance/CloudWatch.puml
+!includeurl AWSPuml/ApplicationIntegration/all.puml
+!includeurl AWSPuml/Database/all.puml
+!includeurl AWSPuml/SecurityIdentityAndCompliance/all.puml
+!include <awslib/mobile/all.puml>
+
+skinparam linetype polyline
+' skinparam linetype ortho
+
+Users(users, "Users", "")
+
+package "AWS" {
+    package "Frontend" as "frontend" {
+        Route53(route53_frontend, "Route 53 WVS frontend host https://wvs.andlvovsky.com", "")
+        CloudFront(cloudfront, "CloudFront (CDN)", "")
+        SimpleStorageServiceS3(frontend_s3_bucket, "S3 frontend hosting bucket (Vue JS compiled static files)", "")
+    }
+    package "API" {
+        Route53(route53_API, "Route 53 WVS API host https://wvs-backend.andlvovsky.com", "")
+        ElasticLoadBalancing(lb, "Application Load Balancer", "")
+        Fargate(fargate, "Fargate service", "")
+        CloudWatch(cloudwatch_logs, "CloudWatch Logs", " ")
+        RDS(wvs_db, "RDS PostgreSQL", "")
+    }
+}
+
+users --> frontend: use
+users --> API: use
+route53_frontend --> cloudfront: forwards to
+cloudfront --> frontend_s3_bucket: gets files
+route53_API --> lb: forwards to
+lb -> fargate: balances user traffic between instances
+fargate --> wvs_db: queries
+cloudwatch_logs --> fargate: stores logs
+frontend --> API: calls
+
+@enduml

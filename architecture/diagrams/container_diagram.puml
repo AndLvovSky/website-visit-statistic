@@ -1,0 +1,38 @@
+@startuml
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/release/1-0/C4_Container.puml
+!include <office/Users/user.puml>
+
+skinparam wrapWidth 200
+skinparam maxMessageSize 250
+
+LAYOUT_WITH_LEGEND()
+LAYOUT_TOP_DOWN
+
+title Container diagram for WVS
+
+Person(analytic, "Business\n Analytic", "<$user>\n")
+Person(admin, "Target Website Administrator", "<$user>\n")
+Person(visitor, "Visitor", "<$user>\n")
+
+System_Boundary(c1, "WVS") {
+    Container(api, "API", "AWS Fargate + Spring Boot application", "")
+    Container(frontend, "Analytic Frontend", "Vue JS, Bootstrap", "")
+    Container(user_frontend, "Target Website Frontend", "JS, HTML", "")
+
+    ContainerDb(wvs_db, "WVS Database", "AWS RDS PostgreSQL", "Stores visits and user data")
+}
+System_Ext(ipgeolocation, "IPGeolocation API", "A third party IP address geolocation service")
+
+Rel(analytic, frontend, "View analytics", "Browser")
+Rel(user_frontend, visitor, "Get data", "Browser")
+Rel(admin, user_frontend, "Setup integration", "Code")
+Rel(admin, frontend, "Register website", "Browser")
+
+Rel(frontend, api, "Use", "HTTP")
+Rel(user_frontend, api, "Save data", "HTTP")
+
+Rel(api, wvs_db, "Use", "JDBC")
+
+Rel(api, ipgeolocation, "Use to geolocate visitor", "HTTP")
+
+@enduml
