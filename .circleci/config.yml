@@ -15,7 +15,8 @@ jobs:
       - run:
           name: "Run backend tests"
           command: |
-            backend/gradlew clean test
+            cd backend
+            ./gradlew clean test
       - save_cache:
           paths:
             - ~/.gradle
