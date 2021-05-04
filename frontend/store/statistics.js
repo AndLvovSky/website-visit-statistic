@@ -20,24 +20,24 @@ export default {
     setVisitSummary: (state, visitSummary) => (state.visitSummary = visitSummary)
   },
   actions: {
-    async loadVisitsPerDayOfWeek ({ commit }, { siteId }) {
-      const data = await this.$axios.$get(`/statistics/time/visits/week/${siteId}`)
+    async loadVisitsPerDayOfWeek ({ commit }, { siteId, unique }) {
+      const data = await this.$axios.$get(`/statistics/time/visits/week/${siteId}?unique=${unique}`)
       const timeVisits = data.map(item => ({
         label: item.time,
         value: item.visits
       }))
       commit('setTimeVisits', timeVisits)
     },
-    async loadVisitsForTheLastMonth ({ commit }, { siteId }) {
-      const data = await this.$axios.$get(`/statistics/time/visits/month/${siteId}`)
+    async loadVisitsForTheLastMonth ({ commit }, { siteId, unique }) {
+      const data = await this.$axios.$get(`/statistics/time/visits/month/${siteId}?unique=${unique}`)
       const timeVisits = data.map(item => ({
         label: item.time,
         value: item.visits
       }))
       commit('setTimeVisits', timeVisits)
     },
-    async loadVisitsPerHour ({ commit }, { siteId }) {
-      const data = await this.$axios.$get(`/statistics/time/visits/day/${siteId}`)
+    async loadVisitsPerHour ({ commit }, { siteId, unique }) {
+      const data = await this.$axios.$get(`/statistics/time/visits/day/${siteId}?unique=${unique}`)
       const timeVisits = data.map(item => ({
         label: item.time,
         value: item.visits

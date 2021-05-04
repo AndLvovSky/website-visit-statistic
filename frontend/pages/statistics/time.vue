@@ -4,6 +4,12 @@
       Visits per day
     </div>
     <div class="d-flex">
+      <b-form-checkbox
+        v-model="unique"
+        @input="loadVisits"
+      >
+        Unique
+      </b-form-checkbox>
       <b-form-select v-model="duration" class="duration-select" @change="loadVisits">
         <b-form-select-option value="week">
           Week
@@ -34,7 +40,8 @@ export default {
   },
   data () {
     return {
-      duration: 'week'
+      duration: 'week',
+      unique: false
     }
   },
   computed: {
@@ -50,7 +57,8 @@ export default {
     ...mapActions('statistics', ['loadVisitsPerDayOfWeek', 'loadVisitsForTheLastMonth', 'loadVisitsPerHour']),
     loadVisits () {
       const params = {
-        siteId: this.$route.query.siteId
+        siteId: this.$route.query.siteId,
+        unique: this.unique
       }
       if (this.duration === 'week') {
         this.loadVisitsPerDayOfWeek(params)

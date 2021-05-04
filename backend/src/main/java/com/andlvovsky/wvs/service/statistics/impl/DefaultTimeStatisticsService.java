@@ -14,20 +14,19 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import lombok.RequiredArgsConstructor;
 
-import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toMap;
 
 @Service
 @RequiredArgsConstructor
@@ -38,12 +37,14 @@ public class DefaultTimeStatisticsService implements TimeStatisticsService {
   private final DateTimeService dateTimeService;
 
   @Override
-  public List<TimeVisitsDto> getVisitsPerDayOfWeek(Long siteId) {
+  public List<TimeVisitsDto> getVisitsPerDayOfWeek(Long siteId, boolean unique) {
     DateTimeInterval lastWeekInterval = dateTimeService.getLastWeekInterval();
     List<VisitEntity> visitsForTheLastWeek = visitServiceLocal.getVisits(siteId, lastWeekInterval);
     Map<LocalDate, Long> visitsPerDate = visitsForTheLastWeek.stream()
-        .map(VisitEntity::getTime)
-        .collect(groupingBy(LocalDateTime::toLocalDate, counting()));
+        .collect(groupingBy(visit -> visit.getTime().toLocalDate(), toList()))
+        .entrySet()
+        .stream()
+        .collect(toMap(Map.Entry::getKey, entry -> getVisits(entry.getValue(), unique)));
     LocalDate dateWeekAgo = lastWeekInterval.getStart().toLocalDate();
     return Stream.iterate(dateWeekAgo, date -> date.plusDays(1))
         .limit(DayOfWeek.values().length)
@@ -51,13 +52,22 @@ public class DefaultTimeStatisticsService implements TimeStatisticsService {
         .collect(toList());
   }
 
+  private long getVisits(List<VisitEntity> visits, boolean unique) {
+    List<String> ips = visits.stream()
+        .map(VisitEntity::getIp)
+        .collect(toList());
+    return unique ? new HashSet<>(ips).size() : ips.size();
+  }
+
   @Override
-  public List<TimeVisitsDto> getVisitsForLastMonth(Long siteId) {
+  public List<TimeVisitsDto> getVisitsForLastMonth(Long siteId, boolean unique) {
     DateTimeInterval lastMonthInterval = dateTimeService.getLastMonthInterval();
     List<VisitEntity> visitsForTheLastMonth = visitServiceLocal.getVisits(siteId, lastMonthInterval);
     Map<LocalDate, Long> visitsPerDate = visitsForTheLastMonth.stream()
-        .map(VisitEntity::getTime)
-        .collect(groupingBy(LocalDateTime::toLocalDate, counting()));
+        .collect(groupingBy(visit -> visit.getTime().toLocalDate(), toList()))
+        .entrySet()
+        .stream()
+        .collect(toMap(Map.Entry::getKey, entry -> getVisits(entry.getValue(), unique)));
     LocalDate dateMonthAgo = lastMonthInterval.getStart().toLocalDate();
     LocalDate dateToday = lastMonthInterval.getEnd().toLocalDate();
     List<TimeVisitsDto> timeVisits = new ArrayList<>();
@@ -68,12 +78,13 @@ public class DefaultTimeStatisticsService implements TimeStatisticsService {
   }
 
   @Override
-  public List<TimeVisitsDto> getVisitsPerHour(Long siteId) {
+  public List<TimeVisitsDto> getVisitsPerHour(Long siteId, boolean unique) {
     List<VisitEntity> visits = visitServiceLocal.getVisits(siteId);
     Map<Integer, Long> hourVisits = visits.stream()
-        .map(VisitEntity::getTime)
-        .map(LocalDateTime::getHour)
-        .collect(groupingBy(Function.identity(), counting()));
+        .collect(groupingBy(visit -> visit.getTime().getHour(), toList()))
+        .entrySet()
+        .stream()
+        .collect(toMap(Map.Entry::getKey, entry -> getVisits(entry.getValue(), unique)));
     IntStream.range(0, 24)
         .forEach(hour -> hourVisits.putIfAbsent(hour, 0L));
     return hourVisits.entrySet().stream()

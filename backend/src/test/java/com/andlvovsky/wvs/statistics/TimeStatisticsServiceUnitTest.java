@@ -44,7 +44,7 @@ public class TimeStatisticsServiceUnitTest {
     ));
 
     // when
-    List<TimeVisitsDto> timeVisitsDtos = timeStatisticsService.getVisitsPerDayOfWeek(1L);
+    List<TimeVisitsDto> timeVisitsDtos = timeStatisticsService.getVisitsPerDayOfWeek(1L, false);
 
     // then
     assertThat(timeVisitsDtos).isEqualTo(Arrays.asList(
@@ -77,7 +77,7 @@ public class TimeStatisticsServiceUnitTest {
     ));
 
     // when
-    List<TimeVisitsDto> timeVisitsDtos = timeStatisticsService.getVisitsForLastMonth(1L);
+    List<TimeVisitsDto> timeVisitsDtos = timeStatisticsService.getVisitsForLastMonth(1L, false);
 
     // then
     assertThat(timeVisitsDtos.size()).isEqualTo(30);
@@ -110,7 +110,7 @@ public class TimeStatisticsServiceUnitTest {
         .thenReturn(visitEntities);
 
     // when
-    List<TimeVisitsDto> timeVisitsDtos = timeStatisticsService.getVisitsPerHour(1L);
+    List<TimeVisitsDto> timeVisitsDtos = timeStatisticsService.getVisitsPerHour(1L, false);
 
     // then
     assertThat(timeVisitsDtos.size()).isEqualTo(24);
