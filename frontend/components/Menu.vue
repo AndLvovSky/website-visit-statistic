@@ -12,22 +12,27 @@
           New Site
         </b-dropdown-item>
       </b-nav-dropdown>
-      <b-nav-item :to="`/statistics/time${getSiteSuffix()}`" exact-active-class="active">
+      <b-nav-item v-show="this.$route.query.siteId" :to="`/statistics/time${getSiteSuffix()}`" exact-active-class="active">
         Time
       </b-nav-item>
-      <b-nav-item :to="`/statistics/device${getSiteSuffix()}`" exact-active-class="active">
-        Device
-      </b-nav-item>
-      <b-nav-item :to="`/statistics/referral-website${getSiteSuffix()}`" exact-active-class="active">
+      <b-nav-dropdown v-show="this.$route.query.siteId" text="Agent">
+        <b-dropdown-item :to="`/statistics/device${getSiteSuffix()}`" exact-active-class="active">
+          Device
+        </b-dropdown-item>
+        <b-dropdown-item :to="`/statistics/browser${getSiteSuffix()}`" exact-active-class="active">
+          Browser
+        </b-dropdown-item>
+      </b-nav-dropdown>
+      <b-nav-item v-show="this.$route.query.siteId" :to="`/statistics/referral-website${getSiteSuffix()}`" exact-active-class="active">
         Referrals
       </b-nav-item>
-      <b-nav-item :to="`/statistics/ab-statistics${getSiteSuffix()}`" exact-active-class="active">
+      <b-nav-item v-show="this.$route.query.siteId" :to="`/statistics/ab-statistics${getSiteSuffix()}`" exact-active-class="active">
         A/B
       </b-nav-item>
-      <b-nav-item :to="`/statistics/route-statistics${getSiteSuffix()}`" exact-active-class="active">
+      <b-nav-item v-show="this.$route.query.siteId" :to="`/statistics/route-statistics${getSiteSuffix()}`" exact-active-class="active">
         Pages
       </b-nav-item>
-      <b-nav-item :to="`/statistics/summary${getSiteSuffix()}`" exact-active-class="active">
+      <b-nav-item v-show="this.$route.query.siteId" :to="`/statistics/summary${getSiteSuffix()}`" exact-active-class="active">
         Summary
       </b-nav-item>
       <b-nav-dropdown v-show="this.$route.query.siteId" text="Country">
@@ -43,7 +48,12 @@
       </b-nav-item>
     </b-navbar-nav>
     <b-navbar-nav class="ml-auto">
-      <b-button v-if="!$route.name.startsWith('login') && !$route.name.startsWith('sign-up')" variant="light" @click="logout">
+      <b-button
+        v-show="this.$route.query.siteId"
+        v-if="!$route.name.startsWith('login') && !$route.name.startsWith('sign-up')"
+        variant="light"
+        @click="logout"
+      >
         Logout
       </b-button>
     </b-navbar-nav>

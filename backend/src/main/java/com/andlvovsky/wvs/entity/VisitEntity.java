@@ -1,5 +1,6 @@
 package com.andlvovsky.wvs.entity;
 
+import com.andlvovsky.wvs.meta.Browser;
 import com.andlvovsky.wvs.meta.Device;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -72,4 +73,8 @@ public class VisitEntity {
 
   @Column(name = "path")
   private String path;
+
+  @Column(name = "browser")
+  @Enumerated(EnumType.STRING)
+  private Browser browser;
 }

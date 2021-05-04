@@ -16,4 +16,5 @@ public class Endpoint {
   public static final String AB_STATISTICS = STATISTICS + "/a-b";
   public static final String ROUTE_STATISTICS = STATISTICS + "/route";
   public static final String VISIT_SUMMARY_STATISTICS = STATISTICS + "/summary";
+  public static final String BROWSER_STATISTICS = STATISTICS + "/browser";
 }

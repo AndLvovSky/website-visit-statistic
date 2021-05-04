@@ -8,7 +8,8 @@ export default {
     referralWebsites: [],
     websiteVersions: [],
     routeVisits: [],
-    visitSummary: {}
+    visitSummary: {},
+    browserVisits: []
   },
   mutations: {
     setTimeVisits: (state, timeVisits) => (state.timeVisits = timeVisits),
@@ -17,7 +18,8 @@ export default {
     setReferralWebsites: (state, referralWebsites) => (state.referralWebsites = referralWebsites),
     setWebsiteVersions: (state, websiteVersions) => (state.websiteVersions = websiteVersions),
     setRouteVisits: (state, routeVisits) => (state.routeVisits = routeVisits),
-    setVisitSummary: (state, visitSummary) => (state.visitSummary = visitSummary)
+    setVisitSummary: (state, visitSummary) => (state.visitSummary = visitSummary),
+    setBrowserVisits: (state, browserVisits) => (state.browserVisits = browserVisits)
   },
   actions: {
     async loadVisitsPerDayOfWeek ({ commit }, { siteId, unique }) {
@@ -190,6 +192,30 @@ export default {
       const url = `/statistics/summary/visits/custom/${siteId}/export?fromDate=${fromDate}&toDate=${toDate}`
       const fileName = 'visit_summary.xlsx'
       downloadBlob(this.$axios, url, fileName)
+    },
+    async loadBrowserVisitsForTheLastWeek ({ commit }, { siteId }) {
+      const data = await this.$axios.$get(`/statistics/browser/visits/week/${siteId}`)
+      const browserVisits = data.map(item => ({
+        label: item.browser,
+        value: item.visits
+      }))
+      commit('setBrowserVisits', browserVisits)
+    },
+    async loadBrowserVisitsForTheLastMonth ({ commit }, { siteId }) {
+      const data = await this.$axios.$get(`/statistics/browser/visits/month/${siteId}`)
+      const browserVisits = data.map(item => ({
+        label: item.browser,
+        value: item.visits
+      }))
+      commit('setBrowserVisits', browserVisits)
+    },
+    async loadBrowserVisits ({ commit }, { siteId, fromDate, toDate }) {
+      const data = await this.$axios.$get(`/statistics/browser/visits/custom/${siteId}?fromDate=${fromDate}&toDate=${toDate}`)
+      const browserVisits = data.map(item => ({
+        label: item.browser,
+        value: item.visits
+      }))
+      commit('setBrowserVisits', browserVisits)
     }
   }
 }

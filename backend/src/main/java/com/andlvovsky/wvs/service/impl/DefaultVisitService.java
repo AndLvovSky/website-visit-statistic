@@ -3,6 +3,7 @@ package com.andlvovsky.wvs.service.impl;
 import com.andlvovsky.wvs.dto.VisitDto;
 import com.andlvovsky.wvs.entity.SiteEntity;
 import com.andlvovsky.wvs.entity.VisitEntity;
+import com.andlvovsky.wvs.meta.Browser;
 import com.andlvovsky.wvs.meta.Device;
 import com.andlvovsky.wvs.repository.VisitRepository;
 import com.andlvovsky.wvs.service.DeviceAnalyzer;
@@ -47,6 +48,8 @@ public class DefaultVisitService implements VisitService {
     visitEntity.setReferralWebsite(visit.getReferralWebsite());
     visitEntity.setWebsiteVersion(visit.getWebsiteVersion());
     visitEntity.setPath(visit.getPath());
+    Browser browser = deviceAnalyzer.getBrowser(visit.getUserAgent());
+    visitEntity.setBrowser(browser);
     visitRepository.save(visitEntity);
   }
 }

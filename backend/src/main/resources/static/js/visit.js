@@ -1,6 +1,6 @@
-function visit(apiKey, websiteVersion) {
+function visit(apiKey, url, websiteVersion) {
     $.ajax({
-        url: `http://localhost:8787/visit/${apiKey}`,
+        url: `${url}/visit/${apiKey}`,
         type: "POST",
         data: JSON.stringify({
             time: new Date().toLocaleString(),
