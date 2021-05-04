@@ -92,7 +92,7 @@ public class DefaultTimeStatisticsService implements TimeStatisticsService {
     } catch (ParseException e) {
       throw new IllegalArgumentException(e.getMessage(), e);
     }
-    String formattedHour = outputFormat.format(inputDate);
+    String formattedHour = outputFormat.format(inputDate).toUpperCase();
     return new TimeVisitsDto(formattedHour, hourVisits.getValue().intValue());
   }
 
