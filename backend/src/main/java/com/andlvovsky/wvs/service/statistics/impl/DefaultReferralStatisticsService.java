@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.function.Function;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,6 +24,8 @@ import static java.util.stream.Collectors.toList;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class DefaultReferralStatisticsService implements ReferralStatisticsService {
+
+  private static final String DIRECT_OPEN = "direct";
 
   private final VisitServiceLocal visitServiceLocal;
   private final DateTimeService dateTimeService;
@@ -50,8 +53,8 @@ public class DefaultReferralStatisticsService implements ReferralStatisticsServi
 
   private List<ReferralWebsiteDto> getReferralWebsites(List<VisitEntity> visits) {
     return visits.stream()
-        .filter(visit -> visit.getReferralWebsite() != null)
-        .collect(groupingBy(VisitEntity::getReferralWebsite, counting()))
+        .map(visit -> visit.getReferralWebsite() == null ? DIRECT_OPEN : visit.getReferralWebsite())
+        .collect(groupingBy(Function.identity(), counting()))
         .entrySet().stream()
         .map(item -> new ReferralWebsiteDto(item.getKey(), item.getValue().intValue()))
         .sorted(comparing(ReferralWebsiteDto::getWebsite))
